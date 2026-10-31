@@ -58,10 +58,17 @@ export const viewport: Viewport = {
  * same policy plus extra headers is also configured in next.config for hosts
  * that serve it dynamically.
  */
+// 'unsafe-eval' is only needed by Next.js' dev runtime; the production static
+// export does not require it, so we drop it in production to tighten script-src.
+const scriptSrc =
+  process.env.NODE_ENV === 'development'
+    ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+    : "script-src 'self' 'unsafe-inline'";
+
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  scriptSrc,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",

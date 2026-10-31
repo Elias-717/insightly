@@ -76,7 +76,7 @@ export default function HomePage() {
       <footer className="no-print border-t border-border py-6 text-center text-sm text-muted">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4">
           <a
-            href="https://github.com/your-org/insightlet"
+            href="https://github.com/Elias-717/insightly"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 font-medium text-fg hover:text-accent"

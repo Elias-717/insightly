@@ -1,7 +1,13 @@
+// 'unsafe-eval' is only needed by the Next.js dev runtime; drop it in production.
+const scriptSrc =
+  process.env.NODE_ENV === 'development'
+    ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+    : "script-src 'self' 'unsafe-inline'";
+
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  scriptSrc,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",

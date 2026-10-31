@@ -41,10 +41,15 @@ src/
 │   │               # correlation, duplicates, profile-column, quality-score,
 │   │               # cleaning, analyze (orchestrator)
 │   ├── export/     # csv, markdown, html, pdf
-│   └── insights/   # types, index (runner + registry), rules/<one per rule>
+│   ├── insights/   # types, index (runner + registry), rules/<one per rule>
+│   └── overview/   # pure presentation helpers for the Overview screen (summary,
+│                   # missing breakdown, quality reasons/verdict) — no analysis logic
 ├── types/index.ts  # shared domain types (single source of truth)
 └── workers/csv.worker.ts  # Papaparse parsing off the main thread
 ```
+
+Security posture and the dependency rationale (why we stay on Next 14.2.x for a
+static export, patched jsPDF, CSP/headers) are documented in `SECURITY.md`.
 
 ### Key design rules (do not break these)
 

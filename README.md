@@ -6,10 +6,10 @@
 
 ### Drop a CSV. Get the story.
 
-[![CI](https://github.com/your-org/insightlet/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/insightlet/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-14B8A6.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-strict-7C3AED.svg)](tsconfig.json)
-[![Coverage](https://img.shields.io/badge/coverage-95.8%25-14B8A6.svg)](TEST_REPORT.md)
+[![CI](https://github.com/Elias-717/insightly/actions/workflows/ci.yml/badge.svg)](https://github.com/Elias-717/insightly/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2563EB.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-2563EB.svg)](tsconfig.json)
+[![Coverage](https://img.shields.io/badge/coverage-95.8%25-2563EB.svg)](TEST_REPORT.md)
 
 </div>
 

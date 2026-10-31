@@ -1,5 +1,5 @@
 /**
- * Shared domain types for Insightlet.
+ * Shared domain types for Insightly.
  * These are the single source of truth across the analysis engine, insights,
  * UI, and export layers. No React imports allowed here.
  */

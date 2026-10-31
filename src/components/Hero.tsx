@@ -59,7 +59,7 @@ export function Hero({ state, onFile, onSample, onCancel }: HeroProps) {
         <div className="overflow-hidden rounded-card border border-border bg-surface">
           <Image
             src="/preview.svg"
-            alt="Preview of the Insightlet results screen showing overview cards, a quality score, and insights."
+            alt="Preview of the Insightly results screen showing overview cards, a quality score, and insights."
             width={1200}
             height={720}
             className="h-auto w-full"

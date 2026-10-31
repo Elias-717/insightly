@@ -1,6 +1,6 @@
-# Insightlet — Test Report
+# Insightly — Test Report
 
-This report documents the test suite added to the existing Insightlet project. No
+This report documents the test suite added to the existing Insightly project. No
 features were refactored or restyled. The only production-code changes were two
 small, security/correctness bug fixes revealed by the tests (see below).
 

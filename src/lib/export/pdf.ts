@@ -51,7 +51,7 @@ export async function exportPdfReport(
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(28);
-  doc.text('Insightlet report', margin, 70);
+  doc.text('Insightly report', margin, 70);
   doc.setFontSize(12);
   doc.setFont('helvetica', 'normal');
   doc.text(`${dataset.raw.fileName}`, margin, 95);
@@ -115,7 +115,7 @@ export async function exportPdfReport(
     y += 2;
   }
 
-  addLine('Generated locally by Insightlet. Your data never left your device.', 9, [148, 163, 184]);
+  addLine('Generated locally by Insightly. Your data never left your device.', 9, [148, 163, 184]);
 
-  doc.save(`insightlet-${dataset.raw.fileName.replace(/\.[^.]+$/, '')}.pdf`);
+  doc.save(`insightly-${dataset.raw.fileName.replace(/\.[^.]+$/, '')}.pdf`);
 }

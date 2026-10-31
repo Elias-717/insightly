@@ -1,4 +1,4 @@
-# Insightlet — Functional Requirements
+# Insightly — Functional Requirements
 
 Each requirement has a stable ID (FR-x). Status reflects the current build.
 Requirements marked **Done** have corresponding implementation and, where

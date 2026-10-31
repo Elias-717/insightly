@@ -47,11 +47,11 @@ describe('ThemeProvider / dark mode', () => {
       </ThemeProvider>,
     );
     await userEvent.click(screen.getByText('toggle'));
-    expect(localStorage.getItem('insightlet-theme')).toBe('dark');
+    expect(localStorage.getItem('insightly-theme')).toBe('dark');
   });
 
   it('restores a stored dark choice on mount', async () => {
-    localStorage.setItem('insightlet-theme', 'dark');
+    localStorage.setItem('insightly-theme', 'dark');
     await act(async () => {
       render(
         <ThemeProvider>

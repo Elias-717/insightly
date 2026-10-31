@@ -34,7 +34,7 @@ export function buildHtmlReport(dataset: Dataset, insights: Insight[]): string {
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Insightlet report — ${escapeHtml(dataset.raw.fileName)}</title>
+<title>Insightly report — ${escapeHtml(dataset.raw.fileName)}</title>
 <style>
   :root { color-scheme: light; }
   body { font-family: Inter, system-ui, sans-serif; margin: 0; padding: 40px; color: #0F172A; background: #F8FAFC; }
@@ -58,7 +58,7 @@ export function buildHtmlReport(dataset: Dataset, insights: Insight[]): string {
 </head>
 <body>
   <div class="wrap">
-    <h1>Insightlet report</h1>
+    <h1>Insightly report</h1>
     <p class="muted">File: ${escapeHtml(dataset.raw.fileName)} · Generated ${new Date().toISOString().slice(0, 10)}</p>
 
     <div class="card">
@@ -92,7 +92,7 @@ export function buildHtmlReport(dataset: Dataset, insights: Insight[]): string {
       <ul>${insightItems}</ul>
     </div>
 
-    <p class="muted">Generated locally by Insightlet. Your data never left your device.</p>
+    <p class="muted">Generated locally by Insightly. Your data never left your device.</p>
   </div>
 </body>
 </html>`;

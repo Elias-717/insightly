@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Insightlet end-to-end flow', () => {
+test.describe('Insightly end-to-end flow', () => {
   test('load sample, browse tabs, open column, clean, export', async ({ page }) => {
     await page.goto('/');
 

@@ -53,7 +53,7 @@ export function ExportBar({ dataset, insights }: { dataset: Dataset; insights: I
       label: 'HTML',
       icon: FileCode2,
       run: () => {
-        downloadText(buildHtmlReport(dataset, insights), `insightlet-${dataset.raw.fileName}.html`, 'text/html');
+        downloadText(buildHtmlReport(dataset, insights), `insightly-${dataset.raw.fileName}.html`, 'text/html');
         toast('HTML report downloaded', 'success');
       },
     },
@@ -62,7 +62,7 @@ export function ExportBar({ dataset, insights }: { dataset: Dataset; insights: I
       label: 'Markdown',
       icon: FileType2,
       run: () => {
-        downloadText(insightsToMarkdown(dataset, insights), `insightlet-${dataset.raw.fileName}.md`, 'text/markdown');
+        downloadText(insightsToMarkdown(dataset, insights), `insightly-${dataset.raw.fileName}.md`, 'text/markdown');
         toast('Markdown downloaded', 'success');
       },
     },

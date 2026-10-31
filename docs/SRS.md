@@ -1,4 +1,4 @@
-# Software Requirements Specification — Insightlet
+# Software Requirements Specification — Insightly
 
 Version 1.0 · Status: implemented
 
@@ -6,13 +6,13 @@ Version 1.0 · Status: implemented
 
 ### 1.1 Purpose
 
-This SRS describes the requirements for Insightlet, a privacy-first, browser-only
+This SRS describes the requirements for Insightly, a privacy-first, browser-only
 data profiling tool. It is intended for developers, reviewers, and any agent or
 contributor continuing the project.
 
 ### 1.2 Scope
 
-Insightlet lets a user drop in a CSV/TSV file and immediately see column types, a
+Insightly lets a user drop in a CSV/TSV file and immediately see column types, a
 data-quality score, per-column statistics, auto-generated charts, a correlation
 heatmap, and plain-English insights. All processing happens in the browser; no
 data is transmitted to any server. The application is a static site with no

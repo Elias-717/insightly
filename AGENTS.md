@@ -1,11 +1,11 @@
 # AGENTS.md
 
-Orientation for AI agents and developers working on Insightlet. Read this before
+Orientation for AI agents and developers working on Insightly. Read this before
 making changes so your edits match how the project actually works.
 
 ## What this project is
 
-Insightlet is a privacy-first, browser-only CSV data-profiling web app. A user
+Insightly is a privacy-first, browser-only CSV data-profiling web app. A user
 drops in a CSV/TSV and gets column types, a quality score, per-column stats,
 charts, a correlation heatmap, and ranked plain-English insights. There is **no
 backend and no database** — everything runs in the browser, and the app exports to

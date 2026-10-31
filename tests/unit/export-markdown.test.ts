@@ -11,7 +11,7 @@ describe('Markdown export', () => {
   const md = insightsToMarkdown(dataset, insights);
 
   it('includes a title with the file name', () => {
-    expect(md).toContain('# Insightlet report — grades.csv');
+    expect(md).toContain('# Insightly report — grades.csv');
   });
 
   it('includes an overview section with row and column counts', () => {

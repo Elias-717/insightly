@@ -25,11 +25,11 @@ export function Header({
         <button
           onClick={onReset}
           className="flex items-center gap-2"
-          aria-label="Insightlet home"
+          aria-label="Insightly home"
           disabled={!showReset}
         >
           <Logo size={26} className="text-fg" />
-          <span className="text-base font-semibold tracking-tightish">Insightlet</span>
+          <span className="text-base font-semibold tracking-tightish">Insightly</span>
         </button>
 
         <div className="flex items-center gap-2">

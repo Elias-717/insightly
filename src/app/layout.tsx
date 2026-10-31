@@ -12,17 +12,17 @@ const mono = JetBrains_Mono({
   display: 'swap',
 });
 
-const title = 'Insightlet — Drop a CSV. Get the story.';
+const title = 'Insightly — Drop a CSV. Get the story.';
 const description =
   'Column types, a data quality score, outliers, correlations, and plain-English insights. No upload, no account.';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://insightlet.vercel.app'),
+  metadataBase: new URL('https://insightly.vercel.app'),
   title,
   description,
-  applicationName: 'Insightlet',
+  applicationName: 'Insightly',
   keywords: ['CSV', 'data profiling', 'data quality', 'analytics', 'privacy', 'browser'],
-  authors: [{ name: 'Insightlet' }],
+  authors: [{ name: 'Insightly' }],
   icons: {
     icon: '/favicon.svg',
   },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title,
     description,
     type: 'website',
-    images: [{ url: '/og.svg', width: 1200, height: 630, alt: 'Insightlet' }],
+    images: [{ url: '/og.svg', width: 1200, height: 630, alt: 'Insightly' }],
   },
   twitter: {
     card: 'summary_large_image',

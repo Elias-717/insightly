@@ -1,6 +1,6 @@
 # Security
 
-Insightlet is a privacy-first, **100% client-side** tool. It has no backend, no
+Insightly is a privacy-first, **100% client-side** tool. It has no backend, no
 database, and makes no network requests with user data. A CSV is read, parsed
 (in a Web Worker), analyzed, and rendered entirely in the browser. This shapes
 the threat model: the main risks are client-side (XSS, unsafe rendering of
@@ -37,7 +37,7 @@ Known remaining advisories and why they do not apply to this app:
 
 - **Next.js server-runtime advisories** (Image Optimizer DoS, request
   smuggling in rewrites, RSC request DoS, middleware cache poisoning). These
-  require a **running Next.js server** using those features. Insightlet ships as
+  require a **running Next.js server** using those features. Insightly ships as
   a **static export** (`output: 'export'`) served as plain files, so none of
   these code paths run. Upgrading to the Next.js major that "fixes" them (16)
   is a breaking change with no security benefit for a static site, so we stay on

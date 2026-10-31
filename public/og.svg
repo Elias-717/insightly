@@ -11,7 +11,7 @@
     <rect x="68" y="136" width="52" height="52" rx="12" fill="#334155"/>
     <rect x="136" y="136" width="52" height="52" rx="12" fill="#334155"/>
   </g>
-  <text x="360" y="300" font-family="Inter, sans-serif" font-size="84" font-weight="600" letter-spacing="-1.5" fill="#F1F5F9">Insightlet</text>
+  <text x="360" y="300" font-family="Inter, sans-serif" font-size="84" font-weight="600" letter-spacing="-1.5" fill="#F1F5F9">Insightly</text>
   <text x="360" y="370" font-family="Inter, sans-serif" font-size="40" font-weight="500" fill="#CBD5E1">Drop a CSV. Get the story.</text>
   <text x="360" y="430" font-family="Inter, sans-serif" font-size="24" font-weight="400" fill="#3B82F6">Runs entirely in your browser. Your file never leaves your device.</text>
 </svg>

@@ -4,7 +4,7 @@
   <rect x="0" y="0" width="1200" height="56" fill="#FFFFFF"/>
   <line x1="0" y1="56" x2="1200" y2="56" stroke="#E2E8F0"/>
   <rect x="32" y="22" width="12" height="12" rx="2" fill="#2563EB"/>
-  <text x="54" y="33" font-size="15" font-weight="600" fill="#0F172A">Insightlet</text>
+  <text x="54" y="33" font-size="15" font-weight="600" fill="#0F172A">Insightly</text>
   <!-- tabs -->
   <text x="32" y="96" font-size="13" font-weight="600" fill="#2563EB">Overview</text>
   <text x="120" y="96" font-size="13" fill="#64748B">Columns</text>

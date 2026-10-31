@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in Insightlet. This is a small, focused project; the bar
+Thanks for your interest in Insightly. This is a small, focused project; the bar
 is simply that changes keep the suite green and the types strict.
 
 ## Getting started

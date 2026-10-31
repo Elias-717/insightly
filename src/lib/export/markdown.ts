@@ -3,7 +3,7 @@ import type { Dataset, Insight } from '@/types';
 /** Render insights as a Markdown document suitable for copying to the clipboard. */
 export function insightsToMarkdown(dataset: Dataset, insights: Insight[]): string {
   const lines: string[] = [];
-  lines.push(`# Insightlet report — ${dataset.raw.fileName}`);
+  lines.push(`# Insightly report — ${dataset.raw.fileName}`);
   lines.push('');
   lines.push(`Generated: ${new Date().toISOString().slice(0, 10)}`);
   lines.push('');

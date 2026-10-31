@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-/** Insightlet logo: a 3x3 grid where one cell is filled with the accent color. */
+/** Insightly logo: a 3x3 grid where one cell is filled with the accent color. */
 export function Logo({ className, size = 32 }: { className?: string; size?: number }) {
   return (
     <svg
@@ -11,7 +11,7 @@ export function Logo({ className, size = 32 }: { className?: string; size?: numb
       xmlns="http://www.w3.org/2000/svg"
       className={cn(className)}
       role="img"
-      aria-label="Insightlet logo"
+      aria-label="Insightly logo"
     >
       {[0, 1, 2].map((row) =>
         [0, 1, 2].map((col) => {

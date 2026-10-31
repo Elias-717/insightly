@@ -14,7 +14,7 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     // Surface for debugging without crashing the app.
-    console.error('Insightlet caught an error:', error);
+    console.error('Insightly caught an error:', error);
   }, [error]);
 
   return (
@@ -23,7 +23,7 @@ export default function GlobalError({
       <div>
         <h1 className="text-xl font-semibold tracking-tightish">Something slipped.</h1>
         <p className="mt-2 max-w-md text-sm text-muted">
-          Insightlet hit an unexpected error, but your data never left your browser. Try again or
+          Insightly hit an unexpected error, but your data never left your browser. Try again or
           reload with a fresh file.
         </p>
       </div>

@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="public/favicon.svg" width="72" height="72" alt="Insightlet logo" />
+<img src="public/favicon.svg" width="72" height="72" alt="Insightly logo" />
 
-# Insightlet
+# Insightly
 
 ### Drop a CSV. Get the story.
 
@@ -13,7 +13,7 @@
 
 </div>
 
-Insightlet is a privacy-first, browser-only data profiling tool. Drop in a CSV and instantly see column types, a data quality score, per-column statistics, auto-generated charts, a correlation heatmap, and plain-English "Whispers" insights. **Files never leave your browser** — all parsing and analysis run locally in a Web Worker.
+Insightly is a privacy-first, browser-only data profiling tool. Drop in a CSV and instantly see column types, a data quality score, per-column statistics, auto-generated charts, a correlation heatmap, and plain-English "Whispers" insights. **Files never leave your browser** — all parsing and analysis run locally in a Web Worker.
 
 ## Features
 
@@ -47,7 +47,7 @@ Insightlet is a privacy-first, browser-only data profiling tool. Drop in a CSV a
 
 ## Privacy
 
-Insightlet has no backend and no database. Your file is read, parsed, and analyzed entirely in your browser. Nothing is uploaded, stored, or transmitted.
+Insightly has no backend and no database. Your file is read, parsed, and analyzed entirely in your browser. Nothing is uploaded, stored, or transmitted.
 
 ### Verify privacy for yourself
 

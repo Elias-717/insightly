@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useRef } from 'react';
+import { ImageDown } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { useToast } from '@/components/providers/ToastProvider';
 
@@ -35,21 +36,22 @@ export function ChartFrame({ id, title, summary, children, controls }: ChartFram
   return (
     <Card id={id}>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <h3 className="font-semibold">{title}</h3>
+        <h3 className="text-sm font-medium">{title}</h3>
         <div className="flex items-center gap-2">
           {controls}
           <button
             onClick={downloadPng}
-            className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+            className="inline-flex items-center gap-1.5 rounded-control border border-border px-2.5 py-1.5 text-xs font-medium hover:bg-surface-2"
           >
+            <ImageDown size={14} aria-hidden="true" />
             Download PNG
           </button>
         </div>
       </div>
-      <div ref={ref} className="bg-white dark:bg-slate-900">
+      <div ref={ref} className="bg-surface">
         {children}
       </div>
-      <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">{summary}</p>
+      <p className="mt-3 text-sm text-muted">{summary}</p>
     </Card>
   );
 }

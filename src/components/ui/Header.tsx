@@ -1,5 +1,6 @@
 'use client';
 
+import { Keyboard, Moon, Sun, FilePlus2 } from 'lucide-react';
 import { Logo } from './Logo';
 import { useTheme } from '@/components/providers/ThemeProvider';
 
@@ -13,9 +14,13 @@ export function Header({
   showReset: boolean;
 }) {
   const { theme, toggle } = useTheme();
+  const nextTheme = theme === 'dark' ? 'light' : 'dark';
+
+  const iconBtn =
+    'inline-flex h-9 w-9 items-center justify-center rounded-control border border-border text-muted transition-colors hover:bg-surface-2 hover:text-fg';
 
   return (
-    <header className="no-print sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
+    <header className="no-print sticky top-0 z-30 border-b border-border bg-bg/85 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
         <button
           onClick={onReset}
@@ -23,30 +28,37 @@ export function Header({
           aria-label="Insightlet home"
           disabled={!showReset}
         >
-          <Logo size={30} className="text-slate-800 dark:text-slate-100" />
-          <span className="text-lg font-extrabold tracking-tight">Insightlet</span>
+          <Logo size={26} className="text-fg" />
+          <span className="text-base font-semibold tracking-tightish">Insightlet</span>
         </button>
 
         <div className="flex items-center gap-2">
           <button
             onClick={onShowShortcuts}
             aria-label="Keyboard shortcuts"
-            className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm font-medium dark:border-slate-700"
+            title="Keyboard shortcuts"
+            className={iconBtn}
           >
-            ?
+            <Keyboard size={18} aria-hidden="true" />
           </button>
           <button
             onClick={toggle}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-sm dark:border-slate-700"
+            aria-label={`Switch to ${nextTheme} mode`}
+            title={`Switch to ${nextTheme} mode`}
+            className={iconBtn}
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
+            {theme === 'dark' ? (
+              <Sun size={18} aria-hidden="true" />
+            ) : (
+              <Moon size={18} aria-hidden="true" />
+            )}
           </button>
           {showReset && (
             <button
               onClick={onReset}
-              className="rounded-lg bg-brand-gradient px-3 py-1.5 text-sm font-semibold text-white"
+              className="inline-flex items-center gap-2 rounded-control bg-accent px-3 py-2 text-sm font-medium text-accent-fg transition-colors hover:opacity-90"
             >
+              <FilePlus2 size={18} aria-hidden="true" />
               New file
             </button>
           )}

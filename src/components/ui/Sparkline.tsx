@@ -14,7 +14,7 @@ export function Sparkline({ values, width = 80, height = 24 }: { values: number[
             width={Math.max(1, barWidth - 1)}
             height={h}
             rx={1}
-            className="fill-violet/70"
+            className="fill-accent/70"
           />
         );
       })}

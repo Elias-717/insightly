@@ -1,5 +1,6 @@
 'use client';
 
+import { ClipboardCopy, CheckCircle2 } from 'lucide-react';
 import type { Dataset, Insight } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { SeverityBadge } from '@/components/ui/Badge';
@@ -26,41 +27,36 @@ export function WhispersPanel({ dataset, insights, onSelectInsight }: WhispersPa
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500">
+      <div className="flex items-center justify-between gap-3">
+        <p className="tabular text-sm text-muted">
           {insights.length} plain-English insights, ranked by importance.
         </p>
         <button
           onClick={copyMarkdown}
-          className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+          className="inline-flex items-center gap-2 rounded-control border border-border px-3 py-2 text-sm font-medium hover:bg-surface-2"
         >
+          <ClipboardCopy size={16} aria-hidden="true" />
           Copy as Markdown
         </button>
       </div>
 
       {insights.length === 0 ? (
-        <Card className="text-center text-slate-500">
+        <Card className="flex items-center justify-center gap-2 py-8 text-center text-sm text-muted">
+          <CheckCircle2 size={18} className="text-discovery" aria-hidden="true" />
           No notable issues found. This dataset looks clean.
         </Card>
       ) : (
         insights.map((insight) => (
-          <Card
-            key={insight.id}
-            className="cursor-pointer transition hover:border-violet"
-          >
+          <Card key={insight.id} className="p-0 transition-colors hover:border-accent">
             <button
-              className="w-full text-left"
+              className="flex w-full items-start gap-3 p-4 text-left"
               onClick={() => onSelectInsight(insight)}
               aria-label={insight.title}
             >
-              <div className="flex items-start gap-3">
-                <SeverityBadge severity={insight.severity} />
-                <div className="min-w-0 flex-1">
-                  <p className="font-semibold">{insight.title}</p>
-                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                    {insight.explanation}
-                  </p>
-                </div>
+              <SeverityBadge severity={insight.severity} />
+              <div className="min-w-0 flex-1">
+                <p className="font-medium">{insight.title}</p>
+                <p className="mt-1 text-sm text-muted">{insight.explanation}</p>
               </div>
             </button>
           </Card>

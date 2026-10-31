@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
+import { UploadCloud, Loader2, CircleAlert, Table2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SAMPLE_DATASETS } from '@/data/samples';
 import type { ParserState } from '@/hooks/useCsvParser';
@@ -10,6 +11,13 @@ interface UploadZoneProps {
   onFile: (file: File) => void;
   onSample: (id: 'grades' | 'sales' | 'messy') => void;
   onCancel: () => void;
+}
+
+/** Presentation-only: rough rows x columns for a sample's CSV string. */
+function dimensions(csv: string): { rows: number; cols: number } {
+  const lines = csv.trim().split('\n');
+  const cols = lines[0]?.split(',').length ?? 0;
+  return { rows: Math.max(0, lines.length - 1), cols };
 }
 
 export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProps) {
@@ -29,7 +37,7 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
   const isParsing = state.status === 'parsing';
 
   return (
-    <div className="w-full">
+    <div className="w-full text-left">
       <div
         role="button"
         tabIndex={0}
@@ -48,11 +56,11 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
         onDragLeave={() => setDragging(false)}
         onDrop={handleDrop}
         className={cn(
-          'flex flex-col items-center justify-center rounded-3xl border-2 border-dashed p-10 text-center transition',
+          'flex flex-col items-center justify-center rounded-card border border-dashed p-8 text-center transition-colors',
           dragging
-            ? 'border-violet bg-violet/5'
-            : 'border-slate-300 hover:border-violet/60 dark:border-slate-700',
-          isParsing && 'pointer-events-none opacity-70',
+            ? 'border-accent bg-accent-soft'
+            : 'border-border bg-surface hover:border-accent hover:bg-accent-soft/50',
+          isParsing && 'pointer-events-none opacity-80',
         )}
       >
         <input
@@ -68,9 +76,9 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
         />
 
         {isParsing ? (
-          <div className="flex flex-col items-center gap-4" aria-live="polite">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-violet" />
-            <p className="font-medium">
+          <div className="flex flex-col items-center gap-3" aria-live="polite">
+            <Loader2 size={28} className="animate-spin text-accent" aria-hidden="true" />
+            <p className="text-sm font-medium">
               Parsing… {state.progressRows > 0 && `${state.progressRows.toLocaleString()} rows`}
             </p>
             <button
@@ -78,28 +86,18 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
                 e.stopPropagation();
                 onCancel();
               }}
-              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+              className="rounded-control border border-border px-3 py-2 text-sm font-medium hover:bg-surface-2"
             >
               Cancel
             </button>
           </div>
         ) : (
           <>
-            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gradient text-white">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M12 16V4m0 0l-4 4m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-control bg-surface-2 text-muted">
+              <UploadCloud size={22} aria-hidden="true" />
             </div>
-            <p className="text-lg font-semibold">Drop your CSV here</p>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              or click to browse · .csv / .tsv · up to 20 MB
-            </p>
+            <p className="text-base font-medium">Drop your CSV here</p>
+            <p className="mt-1 text-sm text-muted">or click to browse · .csv / .tsv · up to 20 MB</p>
           </>
         )}
       </div>
@@ -107,29 +105,40 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
       {state.status === 'error' && (
         <div
           role="alert"
-          className="mt-4 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-900 dark:bg-rose-950/50 dark:text-rose-300"
+          className="mt-4 flex items-start gap-2 rounded-card border border-border bg-danger-soft p-3 text-sm text-danger"
         >
-          <p className="font-semibold">We couldn’t read that file</p>
-          <p className="mt-1">{state.error}</p>
+          <CircleAlert size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
+          <div>
+            <p className="font-semibold">We couldn’t read that file</p>
+            <p className="mt-1">{state.error}</p>
+          </div>
         </div>
       )}
 
       <div className="mt-6">
-        <p className="mb-2 text-center text-sm font-medium text-slate-500 dark:text-slate-400">
-          No file handy? Try sample data:
+        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
+          Try a sample dataset
         </p>
-        <div className="flex flex-wrap justify-center gap-2">
-          {SAMPLE_DATASETS.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => onSample(s.id)}
-              disabled={isParsing}
-              title={s.description}
-              className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition hover:border-violet hover:text-violet disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800"
-            >
-              {s.name}
-            </button>
-          ))}
+        <div className="grid gap-2 sm:grid-cols-3">
+          {SAMPLE_DATASETS.map((s) => {
+            const { rows, cols } = dimensions(s.csv);
+            return (
+              <button
+                key={s.id}
+                onClick={() => onSample(s.id)}
+                disabled={isParsing}
+                className="group flex flex-col gap-1 rounded-card border border-border bg-surface p-3 text-left transition-colors hover:border-accent disabled:opacity-50"
+              >
+                <span className="flex items-center gap-2 text-sm font-medium">
+                  <Table2 size={16} className="text-muted group-hover:text-accent" aria-hidden="true" />
+                  {s.name}
+                </span>
+                <span className="tabular text-xs text-muted">
+                  {rows} rows × {cols} cols · {s.description}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import type { Dataset } from '@/types';
 import { columnValues } from '@/lib/analysis/analyze';
 import { parseNumber } from '@/lib/analysis/clean-value';
 import { ChartFrame } from './ChartFrame';
+import { CHART_ACCENT, CHART_GRID } from './palette';
 
 export function ScatterPlot({ dataset }: { dataset: Dataset }) {
   const numericCols = dataset.columns.filter((c) => c.type === 'number' || c.type === 'integer');
@@ -43,7 +44,7 @@ export function ScatterPlot({ dataset }: { dataset: Dataset }) {
   }
 
   const selectClass =
-    'rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800';
+    'rounded-control border border-border bg-surface px-2 py-1 text-xs';
 
   return (
     <ChartFrame
@@ -80,15 +81,15 @@ export function ScatterPlot({ dataset }: { dataset: Dataset }) {
     >
       <ResponsiveContainer width="100%" height={300}>
         <RScatterChart margin={{ bottom: 10, left: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
+          <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
           <XAxis type="number" dataKey="x" name={xCol} tick={{ fontSize: 11 }} />
           <YAxis type="number" dataKey="y" name={yCol} tick={{ fontSize: 11 }} />
           <ZAxis range={[40, 40]} />
           <Tooltip
             cursor={{ strokeDasharray: '3 3' }}
-            contentStyle={{ borderRadius: 12, fontSize: 12 }}
+            contentStyle={{ borderRadius: 8, fontSize: 12 }}
           />
-          <Scatter data={data} fill="#7C3AED" fillOpacity={0.6} />
+          <Scatter data={data} fill={CHART_ACCENT} fillOpacity={0.6} />
         </RScatterChart>
       </ResponsiveContainer>
     </ChartFrame>

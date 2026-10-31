@@ -2,16 +2,7 @@
 
 import type { Dataset } from '@/types';
 import { ChartFrame } from './ChartFrame';
-
-/** Map a correlation value in [-1, 1] to a diverging violet↔teal color. */
-function colorFor(value: number): string {
-  // Negative -> violet, positive -> teal, 0 -> light gray.
-  const intensity = Math.abs(value);
-  if (value >= 0) {
-    return `rgba(20, 184, 166, ${0.15 + intensity * 0.75})`;
-  }
-  return `rgba(124, 58, 237, ${0.15 + intensity * 0.75})`;
-}
+import { correlationColor } from './palette';
 
 export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
   const { columns, lookup } = dataset.correlation;
@@ -31,7 +22,7 @@ export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
     <ChartFrame
       id="chart-correlation"
       title="Correlation heatmap"
-      summary={`Pearson correlation across ${columns.length} numeric columns. Strongest relationship: ${strongest.a} and ${strongest.b} at r = ${strongest.v.toFixed(2)}. Teal is positive, violet is negative.`}
+      summary={`Pearson correlation across ${columns.length} numeric columns. Strongest relationship: ${strongest.a} and ${strongest.b} at r = ${strongest.v.toFixed(2)}. Indigo is positive, slate is negative; darker means stronger.`}
     >
       <div className="overflow-x-auto scroll-thin">
         <table className="border-collapse text-xs">
@@ -39,7 +30,11 @@ export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
             <tr>
               <th className="p-1" />
               {columns.map((c) => (
-                <th key={c} className="max-w-[60px] truncate p-1 text-left font-medium" title={c}>
+                <th
+                  key={c}
+                  className="max-w-[60px] truncate p-1 text-left font-mono font-medium"
+                  title={c}
+                >
                   {c}
                 </th>
               ))}
@@ -48,7 +43,10 @@ export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
           <tbody>
             {columns.map((rowName) => (
               <tr key={rowName}>
-                <th className="max-w-[80px] truncate p-1 text-right font-medium" title={rowName}>
+                <th
+                  className="max-w-[80px] truncate p-1 text-right font-mono font-medium"
+                  title={rowName}
+                >
                   {rowName}
                 </th>
                 {columns.map((colName) => {
@@ -56,8 +54,8 @@ export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
                   return (
                     <td
                       key={colName}
-                      className="h-10 w-10 min-w-[40px] text-center font-mono text-[10px] text-slate-700 dark:text-slate-200"
-                      style={{ backgroundColor: colorFor(v) }}
+                      className="tabular h-10 w-10 min-w-[40px] text-center font-mono text-[10px] text-fg"
+                      style={{ backgroundColor: correlationColor(v) }}
                       title={`${rowName} × ${colName}: r = ${v.toFixed(2)}`}
                     >
                       {v.toFixed(2)}
@@ -69,15 +67,18 @@ export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
           </tbody>
         </table>
       </div>
-      <div className="mt-3 flex items-center gap-3 text-xs text-slate-500">
+      <div className="mt-3 flex items-center gap-3 text-xs text-muted">
         <span className="flex items-center gap-1">
-          <span className="inline-block h-3 w-3 rounded" style={{ background: colorFor(-1) }} /> −1
+          <span className="inline-block h-3 w-3 rounded" style={{ background: correlationColor(-1) }} />{' '}
+          −1
         </span>
         <span className="flex items-center gap-1">
-          <span className="inline-block h-3 w-3 rounded" style={{ background: colorFor(0) }} /> 0
+          <span className="inline-block h-3 w-3 rounded border border-border" style={{ background: correlationColor(0) }} />{' '}
+          0
         </span>
         <span className="flex items-center gap-1">
-          <span className="inline-block h-3 w-3 rounded" style={{ background: colorFor(1) }} /> +1
+          <span className="inline-block h-3 w-3 rounded" style={{ background: correlationColor(1) }} />{' '}
+          +1
         </span>
       </div>
     </ChartFrame>

@@ -24,7 +24,7 @@ export function ChartsPanel({ dataset }: { dataset: Dataset }) {
 
   if (nothingToShow) {
     return (
-      <Card className="text-center text-slate-500">
+      <Card className="text-center text-sm text-muted">
         No chartable columns were detected. Charts appear for numeric, category, and date columns.
       </Card>
     );
@@ -52,7 +52,7 @@ export function ChartsPanel({ dataset }: { dataset: Dataset }) {
       {numericCols.length > 4 && !showAllNumeric && (
         <button
           onClick={() => setShowAllNumeric(true)}
-          className="mx-auto block rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+          className="mx-auto block rounded-control border border-border px-4 py-2 text-sm font-medium hover:bg-surface-2"
         >
           Show all {numericCols.length} numeric charts
         </button>

@@ -1,14 +1,20 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { ToastProvider } from '@/components/providers/ToastProvider';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+// Self-hosted via next/font — no external font requests at runtime.
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 const title = 'Insightlet — Drop a CSV. Get the story.';
 const description =
-  'A privacy-first, browser-only data profiling tool. Drop a CSV and instantly see column types, a data quality score, statistics, charts, and plain-English insights. Your data never leaves your device.';
+  'Column types, a data quality score, outliers, correlations, and plain-English insights. No upload, no account.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://insightlet.vercel.app'),
@@ -35,15 +41,46 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#7C3AED',
+  themeColor: '#4F46E5',
   width: 'device-width',
   initialScale: 1,
 };
 
+/*
+ * Content-Security-Policy for a fully local, static app.
+ * - default-src 'self': nothing loads cross-origin by default.
+ * - script-src allows inline/eval only as Next.js' hydration runtime requires;
+ *   there are no third-party scripts.
+ * - worker-src blob: for the CSV parsing Web Worker.
+ * - connect-src 'self': no outbound network calls with user data.
+ * - img-src allows data:/blob: for generated chart PNGs and downloads.
+ * Delivered as a <meta> tag because static export cannot set HTTP headers; the
+ * same policy plus extra headers is also configured in next.config for hosts
+ * that serve it dynamically.
+ */
+const csp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "worker-src 'self' blob:",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+].join('; ');
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${mono.variable}`}>
+      <head>
+        <meta httpEquiv="Content-Security-Policy" content={csp} />
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta name="referrer" content="no-referrer" />
+      </head>
+      <body className="font-sans antialiased">
         <ThemeProvider>
           <ToastProvider>{children}</ToastProvider>
         </ThemeProvider>

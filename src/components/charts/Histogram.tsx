@@ -13,6 +13,7 @@ import {
 import type { ColumnProfile } from '@/types';
 import { histogram } from '@/lib/analysis/stats';
 import { ChartFrame } from './ChartFrame';
+import { CHART_ACCENT, CHART_GRID } from './palette';
 
 export function Histogram({ column }: { column: ColumnProfile }) {
   const [bins, setBins] = useState(10);
@@ -36,7 +37,7 @@ export function Histogram({ column }: { column: ColumnProfile }) {
             max={30}
             value={bins}
             onChange={(e) => setBins(Number(e.target.value))}
-            className="accent-violet"
+            className="accent-accent"
             aria-label="Adjust histogram bin count"
           />
           <span className="w-6 text-right">{bins}</span>
@@ -45,14 +46,14 @@ export function Histogram({ column }: { column: ColumnProfile }) {
     >
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
+          <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
           <XAxis dataKey="label" tick={{ fontSize: 10 }} interval="preserveStartEnd" />
           <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
           <Tooltip
-            contentStyle={{ borderRadius: 12, fontSize: 12 }}
+            contentStyle={{ borderRadius: 8, fontSize: 12 }}
             labelFormatter={(l) => `Range ${l}`}
           />
-          <Bar dataKey="count" fill="#7C3AED" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="count" fill={CHART_ACCENT} radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </ChartFrame>

@@ -1,7 +1,34 @@
+const csp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "worker-src 'self' blob:",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+].join('; ');
+
+// For static export (`output: 'export'`) the headers() config is not applied at
+// build time, so the Content-Security-Policy and X-Content-Type-Options are
+// delivered via <meta> tags in the root layout. Hosts should ALSO set the full
+// header set below at the CDN/edge. This array is exported for that purpose and
+// documented in the README "Verify privacy" section.
+export const SECURITY_HEADERS = {
+  'Content-Security-Policy': csp,
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'no-referrer',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  'X-Frame-Options': 'DENY',
+};
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Enables `next build` to emit a fully static site (deployable to Vercel or any static host).
+  // Static export (deployable to any static host) reinforces the privacy story.
   output: 'export',
   images: {
     unoptimized: true,

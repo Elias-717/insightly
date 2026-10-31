@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { ArrowRight, Download, RotateCcw } from 'lucide-react';
 import type { Dataset, RawDataset } from '@/types';
 import { Card } from '@/components/ui/Card';
 import {
@@ -12,6 +13,7 @@ import {
 import { analyzeDataset } from '@/lib/analysis/analyze';
 import { downloadCsv } from '@/lib/export/csv';
 import { useToast } from '@/components/providers/ToastProvider';
+import { cn } from '@/lib/utils';
 
 interface CleaningPanelProps {
   dataset: Dataset;
@@ -37,7 +39,7 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
   const Action = ({ label, onClick }: { label: string; onClick: () => void }) => (
     <button
       onClick={onClick}
-      className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium shadow-sm transition hover:border-violet hover:text-violet dark:border-slate-700 dark:bg-slate-800"
+      className="rounded-control border border-border bg-surface px-4 py-3 text-left text-sm font-medium transition-colors hover:border-accent hover:text-accent"
     >
       {label}
     </button>
@@ -46,23 +48,25 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
   return (
     <div className="space-y-6">
       <Card>
-        <h3 className="mb-3 font-semibold">Quality score: before → after</h3>
+        <h3 className="mb-3 text-sm font-medium">Quality score: before → after</h3>
         <div className="flex items-center gap-4">
           <div className="text-center">
-            <div className="text-3xl font-bold text-slate-400">{before}</div>
-            <div className="text-xs text-slate-500">Original</div>
+            <div className="stat-value text-3xl font-semibold tabular text-muted">{before}</div>
+            <div className="text-xs text-muted">Original</div>
           </div>
-          <div className="text-2xl text-slate-400">→</div>
+          <ArrowRight size={20} className="text-muted" aria-hidden="true" />
           <div className="text-center">
             <div
-              className="text-3xl font-extrabold"
-              style={{ color: after >= before ? '#14B8A6' : '#F43F5E' }}
+              className={cn(
+                'stat-value text-3xl font-semibold tabular',
+                after >= before ? 'text-discovery' : 'text-danger',
+              )}
             >
               {after}
             </div>
-            <div className="text-xs text-slate-500">After cleaning</div>
+            <div className="text-xs text-muted">After cleaning</div>
           </div>
-          <div className="ml-auto text-sm text-slate-500">
+          <div className="tabular ml-auto text-sm text-muted">
             {afterDataset.overview.rows.toLocaleString()} rows ·{' '}
             {afterDataset.overview.columns} columns
           </div>
@@ -70,7 +74,7 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
       </Card>
 
       <Card>
-        <h3 className="mb-3 font-semibold">One-click cleaning</h3>
+        <h3 className="mb-3 text-sm font-medium">One-click cleaning</h3>
         <div className="grid gap-3 sm:grid-cols-2">
           <Action
             label="Remove duplicate rows"
@@ -84,7 +88,7 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
             label="Trim whitespace"
             onClick={() => apply(trimWhitespace, 'Whitespace trimmed')}
           />
-          <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800">
+          <div className="rounded-control border border-border bg-surface p-3">
             <p className="mb-2 text-sm font-medium">Standardize casing</p>
             <div className="flex flex-wrap gap-1">
               {categoryColumns.slice(0, 6).map((c) => (
@@ -96,13 +100,13 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
                       `Casing standardized for ${c.name}`,
                     )
                   }
-                  className="rounded-lg bg-slate-100 px-2 py-1 text-xs hover:bg-violet hover:text-white dark:bg-slate-700"
+                  className="rounded-control bg-surface-2 px-2 py-1 font-mono text-xs transition-colors hover:bg-accent hover:text-accent-fg"
                 >
                   {c.name}
                 </button>
               ))}
               {categoryColumns.length === 0 && (
-                <span className="text-xs text-slate-400">No category columns</span>
+                <span className="text-xs text-muted">No category columns</span>
               )}
             </div>
           </div>
@@ -115,8 +119,9 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
             downloadCsv(working, `cleaned-${dataset.raw.fileName}`);
             toast('Cleaned CSV downloaded', 'success');
           }}
-          className="rounded-xl bg-brand-gradient px-5 py-2.5 font-semibold text-white shadow-soft transition hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-control bg-accent px-4 py-2 text-sm font-medium text-accent-fg transition-colors hover:opacity-90"
         >
+          <Download size={18} aria-hidden="true" />
           Download cleaned CSV
         </button>
         <button
@@ -124,8 +129,9 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
             setWorking(dataset.raw);
             toast('Cleaning reset', 'info');
           }}
-          className="rounded-xl border border-slate-200 px-5 py-2.5 font-medium hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+          className="inline-flex items-center gap-2 rounded-control border border-border px-4 py-2 text-sm font-medium hover:bg-surface-2"
         >
+          <RotateCcw size={18} aria-hidden="true" />
           Reset
         </button>
       </div>

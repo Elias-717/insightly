@@ -2,6 +2,7 @@
 
 import { forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
 import type { CellValue, Dataset } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { isMissing, parseNumber } from '@/lib/analysis/clean-value';
@@ -114,9 +115,9 @@ export const DataTablePanel = forwardRef<DataTableHandle, DataTablePanelProps>(
 
     const cellClass = (value: CellValue, rowOutlier: boolean) =>
       cn(
-        'truncate border-b border-slate-100 px-3 py-2 text-sm dark:border-slate-800',
-        isMissing(value) && 'bg-rose-50 text-rose-400 dark:bg-rose-950/30',
-        rowOutlier && 'bg-amber-50 font-medium text-amber-700 dark:bg-amber-950/30 dark:text-amber-300',
+        'truncate border-b border-border px-3 py-1.5 font-mono text-[13px] tabular',
+        isMissing(value) && 'bg-danger-soft text-danger',
+        rowOutlier && 'bg-warning-soft font-medium text-warning',
       );
 
     return (
@@ -129,25 +130,25 @@ export const DataTablePanel = forwardRef<DataTableHandle, DataTablePanelProps>(
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search all columns…  (press /)"
             aria-label="Search the data table"
-            className="w-full max-w-xs rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 sm:w-auto"
+            className="w-full max-w-xs rounded-control border border-border bg-surface px-3 py-2 text-sm sm:w-auto"
           />
-          <span className="text-sm text-slate-500">
+          <span className="tabular text-sm text-muted">
             {filteredRows.length.toLocaleString()} of {rows.length.toLocaleString()} rows
           </span>
           <details className="relative ml-auto">
-            <summary className="cursor-pointer rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium dark:border-slate-700">
+            <summary className="cursor-pointer rounded-control border border-border px-3 py-2 text-sm font-medium">
               Columns
             </summary>
-            <div className="absolute right-0 z-20 mt-2 max-h-64 w-56 overflow-auto rounded-xl border border-slate-200 bg-white p-2 shadow-soft dark:border-slate-700 dark:bg-slate-800">
+            <div className="absolute right-0 z-20 mt-2 max-h-64 w-56 overflow-auto rounded-card border border-border bg-surface p-2 shadow-popover">
               {headers.map((h, i) => (
                 <label key={i} className="flex items-center gap-2 px-2 py-1 text-sm">
                   <input
                     type="checkbox"
                     checked={!hidden.has(i)}
                     onChange={() => toggleHidden(i)}
-                    className="accent-violet"
+                    className="accent-accent"
                   />
-                  <span className="truncate">{h}</span>
+                  <span className="truncate font-mono text-xs">{h}</span>
                 </label>
               ))}
             </div>
@@ -157,18 +158,22 @@ export const DataTablePanel = forwardRef<DataTableHandle, DataTablePanelProps>(
         <Card className="p-0">
           <div ref={parentRef} className="scroll-thin max-h-[600px] overflow-auto">
             <table className="w-full min-w-max border-collapse">
-              <thead className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-800">
+              <thead className="sticky top-0 z-10 bg-surface-2">
                 <tr>
                   {visibleColumns.map(({ h, i }) => (
-                    <th key={i} className="min-w-[140px] px-3 py-2 text-left">
+                    <th key={i} className="min-w-[140px] border-b border-border px-3 py-2 text-left">
                       <button
                         onClick={() => toggleSort(i)}
-                        className="flex items-center gap-1 text-sm font-semibold"
+                        className="flex items-center gap-1 font-mono text-xs font-semibold"
                       >
                         {h}
-                        <span className="text-xs text-slate-400">
-                          {sortCol === i ? (sortDir === 'asc' ? '▲' : sortDir === 'desc' ? '▼' : '') : '⇅'}
-                        </span>
+                        {sortCol === i && sortDir === 'asc' ? (
+                          <ChevronUp size={13} className="text-accent" aria-hidden="true" />
+                        ) : sortCol === i && sortDir === 'desc' ? (
+                          <ChevronDown size={13} className="text-accent" aria-hidden="true" />
+                        ) : (
+                          <ChevronsUpDown size={13} className="text-muted" aria-hidden="true" />
+                        )}
                       </button>
                       <input
                         type="text"
@@ -178,7 +183,7 @@ export const DataTablePanel = forwardRef<DataTableHandle, DataTablePanelProps>(
                         }
                         placeholder="filter"
                         aria-label={`Filter ${h}`}
-                        className="mt-1 w-full rounded border border-slate-200 bg-white px-1.5 py-0.5 text-xs dark:border-slate-700 dark:bg-slate-900"
+                        className="mt-1 w-full rounded-control border border-border bg-surface px-1.5 py-0.5 text-xs"
                       />
                     </th>
                   ))}
@@ -191,7 +196,7 @@ export const DataTablePanel = forwardRef<DataTableHandle, DataTablePanelProps>(
                 {rowVirtualizer.getVirtualItems().map((virtualRow) => {
                   const row = filteredRows[virtualRow.index];
                   return (
-                    <tr key={virtualRow.key} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <tr key={virtualRow.key} className="hover:bg-surface-2">
                       {visibleColumns.map(({ i }) => {
                         const value = row[i] ?? null;
                         const num = parseNumber(value);

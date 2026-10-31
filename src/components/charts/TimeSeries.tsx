@@ -14,6 +14,7 @@ import type { Dataset } from '@/types';
 import { columnValues } from '@/lib/analysis/analyze';
 import { parseDate, parseNumber } from '@/lib/analysis/clean-value';
 import { ChartFrame } from './ChartFrame';
+import { CHART_ACCENT, CHART_GRID } from './palette';
 
 type Granularity = 'day' | 'week' | 'month';
 type Aggregation = 'sum' | 'mean' | 'count';
@@ -64,7 +65,7 @@ export function TimeSeries({ dataset }: { dataset: Dataset }) {
   if (dateCols.length === 0) return null;
 
   const selectClass =
-    'rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800';
+    'rounded-control border border-border bg-surface px-2 py-1 text-xs';
 
   return (
     <ChartFrame
@@ -110,15 +111,15 @@ export function TimeSeries({ dataset }: { dataset: Dataset }) {
     >
       <ResponsiveContainer width="100%" height={280}>
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
+          <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
           <XAxis dataKey="key" tick={{ fontSize: 10 }} interval="preserveStartEnd" />
           <YAxis tick={{ fontSize: 11 }} />
-          <Tooltip contentStyle={{ borderRadius: 12, fontSize: 12 }} />
+          <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} />
           <Line
             type="monotone"
             dataKey="value"
-            stroke="#7C3AED"
-            strokeWidth={2.5}
+            stroke={CHART_ACCENT}
+            strokeWidth={2}
             dot={{ r: 2 }}
             activeDot={{ r: 5 }}
           />

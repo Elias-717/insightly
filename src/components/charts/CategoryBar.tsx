@@ -15,6 +15,7 @@ import { columnValues } from '@/lib/analysis/analyze';
 import { isMissing } from '@/lib/analysis/clean-value';
 import type { RawDataset } from '@/types';
 import { ChartFrame } from './ChartFrame';
+import { CHART_ACCENT, CHART_GRID } from './palette';
 
 export function CategoryBar({ column, raw }: { column: ColumnProfile; raw: RawDataset }) {
   const data = useMemo(() => {
@@ -44,11 +45,11 @@ export function CategoryBar({ column, raw }: { column: ColumnProfile; raw: RawDa
     >
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={data} layout="vertical" margin={{ left: 20 }}>
-          <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-700" />
+          <CartesianGrid strokeDasharray="3 3" stroke={CHART_GRID} />
           <XAxis type="number" tick={{ fontSize: 11 }} allowDecimals={false} />
           <YAxis dataKey="value" type="category" width={110} tick={{ fontSize: 11 }} />
-          <Tooltip contentStyle={{ borderRadius: 12, fontSize: 12 }} />
-          <Bar dataKey="count" fill="#14B8A6" radius={[0, 4, 4, 0]} />
+          <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+          <Bar dataKey="count" fill={CHART_ACCENT} radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </ChartFrame>

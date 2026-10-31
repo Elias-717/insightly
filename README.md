@@ -49,6 +49,16 @@ Insightlet is a privacy-first, browser-only data profiling tool. Drop in a CSV a
 
 Insightlet has no backend and no database. Your file is read, parsed, and analyzed entirely in your browser. Nothing is uploaded, stored, or transmitted.
 
+### Verify privacy for yourself
+
+You don't have to take our word for it:
+
+1. Open your browser DevTools (F12) and select the **Network** tab.
+2. Load a CSV or click a sample dataset and use every tab.
+3. Watch the request list — no requests carrying your file or data are made. The app only loaded its own static assets (HTML, JS, CSS, fonts) up front.
+
+There are no analytics, trackers, or third-party scripts. Fonts are self-hosted via `next/font`. A Content-Security-Policy (`connect-src 'self'`, no third-party `script-src`) is applied via `<meta>` in the page and exported as `SECURITY_HEADERS` in `next.config.mjs` for hosts to set at the CDN/edge (CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-Frame-Options).
+
 ## How it works
 
 ```mermaid
@@ -146,15 +156,18 @@ These were decided during the build to keep everything local, fast, and portfoli
 - **Virtualized table over pagination.** @tanstack/react-virtual keeps scrolling smooth at 50k+ rows without the UX cost of paging.
 - **Recharts** for charts and a hand-rolled SVG for the correlation heatmap and box summaries, where a grid/box renders more cleanly and accessibly than a charting primitive.
 - **No `any`.** Strict TypeScript throughout, with shared domain types as the single source of truth.
+- **One calm accent, token-driven theming.** A single indigo accent (`#4F46E5`) is used only for primary actions, links, focus rings, and active tabs; semantic colors (amber/blue/green/red) are reserved for meaning and always paired with a Lucide icon and a text label. All colors, radii, and spacing are CSS-variable design tokens checked for WCAG AA contrast in light and dark mode.
+- **Monospace for data.** Column names and raw table/stat values use JetBrains Mono with `tabular-nums` so figures align; UI text uses Inter. Both are self-hosted via `next/font`.
+- **Flat surfaces, hairline borders.** 1px borders and a single card radius replace heavy shadows; a subtle shadow is used only on popovers and dialogs. Animations are kept under 200ms and disabled under `prefers-reduced-motion`.
 - **`metadataBase`** points at a placeholder Vercel URL so Open Graph images resolve; change it to your deployed domain.
 
 ## Screenshots
 
-> Placeholders — drop real captures in `docs/screenshots/` when deploying.
+A static preview of the results screen ships at [`public/preview.svg`](public/preview.svg) and is shown on the landing page. Drop real captures of the landing and results screens (light and dark) into `docs/screenshots/` when deploying.
 
 | Landing | Overview | Charts | Whispers |
 | --- | --- | --- | --- |
-| _hero + upload_ | _quality gauge + cards_ | _histograms + heatmap_ | _ranked insights_ |
+| _hero + upload_ | _quality ring + cards_ | _histograms + heatmap_ | _ranked insights_ |
 
 ## Future improvements
 

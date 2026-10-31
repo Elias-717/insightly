@@ -7,10 +7,18 @@ import { formatNumber } from '@/lib/utils';
 
 function Row({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="flex justify-between border-b border-slate-100 py-1.5 text-sm last:border-0 dark:border-slate-800">
-      <span className="text-slate-500">{label}</span>
-      <span className="font-medium">{typeof value === 'number' ? formatNumber(value) : value}</span>
+    <div className="flex justify-between border-b border-border py-1.5 text-sm last:border-0">
+      <span className="text-muted">{label}</span>
+      <span className="tabular font-medium">
+        {typeof value === 'number' ? formatNumber(value) : value}
+      </span>
     </div>
+  );
+}
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h4 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">{children}</h4>
   );
 }
 
@@ -19,8 +27,8 @@ export function ColumnDetail({ column }: { column: ColumnProfile }) {
 
   return (
     <Card>
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="truncate text-lg font-bold">{column.name}</h3>
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <h3 className="truncate font-mono text-base font-semibold">{column.name}</h3>
         <TypeBadge type={column.type} />
       </div>
 
@@ -30,7 +38,7 @@ export function ColumnDetail({ column }: { column: ColumnProfile }) {
 
       {numeric && (
         <div className="mt-4">
-          <h4 className="mb-1 text-sm font-semibold text-violet">Numeric statistics</h4>
+          <SectionTitle>Numeric statistics</SectionTitle>
           <Row label="Min / Max" value={`${formatNumber(numeric.min)} / ${formatNumber(numeric.max)}`} />
           <Row label="Mean" value={numeric.mean} />
           <Row label="Median" value={numeric.median} />
@@ -48,22 +56,22 @@ export function ColumnDetail({ column }: { column: ColumnProfile }) {
 
       {category && (
         <div className="mt-4">
-          <h4 className="mb-1 text-sm font-semibold text-teal">Top values</h4>
+          <SectionTitle>Top values</SectionTitle>
           {category.top.map((t) => (
-            <div key={t.value} className="mb-1">
+            <div key={t.value} className="mb-1.5">
               <div className="flex justify-between text-sm">
-                <span className="truncate">{t.value}</span>
-                <span className="text-slate-500">
+                <span className="truncate font-mono">{t.value}</span>
+                <span className="tabular text-muted">
                   {t.count} ({t.percentage.toFixed(1)}%)
                 </span>
               </div>
-              <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                <div className="h-full bg-teal" style={{ width: `${t.percentage}%` }} />
+              <div className="mt-0.5 h-1.5 overflow-hidden rounded-full bg-surface-2">
+                <div className="h-full bg-accent" style={{ width: `${t.percentage}%` }} />
               </div>
             </div>
           ))}
           {category.rareCount > 0 && (
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="tabular mt-2 text-xs text-muted">
               {category.rareCount} rare value(s) appear in under 1% of rows.
             </p>
           )}
@@ -72,7 +80,7 @@ export function ColumnDetail({ column }: { column: ColumnProfile }) {
 
       {date && date.earliest && (
         <div className="mt-4">
-          <h4 className="mb-1 text-sm font-semibold text-violet">Date range</h4>
+          <SectionTitle>Date range</SectionTitle>
           <Row label="Earliest" value={date.earliest} />
           <Row label="Latest" value={date.latest} />
           <Row label="Span" value={`${date.spanDays} days`} />
@@ -83,7 +91,7 @@ export function ColumnDetail({ column }: { column: ColumnProfile }) {
 
       {text && (
         <div className="mt-4">
-          <h4 className="mb-1 text-sm font-semibold text-slate-500">Text</h4>
+          <SectionTitle>Text</SectionTitle>
           <Row label="Avg length" value={text.avgLength.toFixed(1)} />
           <Row label="Longest" value={text.longest.slice(0, 40)} />
           <Row label="Shortest" value={text.shortest.slice(0, 40)} />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { FileText, FileCode2, FileType2 } from 'lucide-react';
 import type { Dataset, Insight } from '@/types';
 import { exportPdfReport } from '@/lib/export/pdf';
 import { buildHtmlReport } from '@/lib/export/html';
@@ -41,17 +42,20 @@ export function ExportBar({ dataset, insights }: { dataset: Dataset; insights: I
   };
 
   const btn =
-    'rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium transition hover:border-violet hover:text-violet disabled:opacity-50 dark:border-slate-700';
+    'inline-flex items-center gap-1.5 rounded-control border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:border-accent hover:text-accent disabled:opacity-50';
 
   return (
     <div className="flex flex-wrap items-center gap-2">
       <button onClick={exportPdf} disabled={busy} className={btn}>
+        <FileText size={16} aria-hidden="true" />
         Export PDF
       </button>
       <button onClick={exportHtml} className={btn}>
+        <FileCode2 size={16} aria-hidden="true" />
         Export HTML
       </button>
       <button onClick={exportMd} className={btn}>
+        <FileType2 size={16} aria-hidden="true" />
         Export Markdown
       </button>
     </div>

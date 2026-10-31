@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useRef, useState } from 'react';
+import { TriangleAlert } from 'lucide-react';
 import type { ColumnType, Dataset, Insight, RawDataset } from '@/types';
 import { analyzeDataset } from '@/lib/analysis/analyze';
 import { runInsights } from '@/lib/insights';
@@ -55,11 +56,14 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
     <div ref={topRef} className="animate-fade-in mx-auto max-w-7xl px-4 py-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold">{raw.fileName}</h2>
-          <p className="text-sm text-slate-500">
+          <h2 className="font-mono text-lg font-semibold tracking-tightish">{raw.fileName}</h2>
+          <p className="tabular text-sm text-muted">
             {dataset.overview.rows.toLocaleString()} rows · {dataset.overview.columns} columns
             {raw.skippedRows > 0 && (
-              <span className="ml-2 text-amber-600">({raw.skippedRows} malformed rows skipped)</span>
+              <span className="ml-2 inline-flex items-center gap-1 text-warning">
+                <TriangleAlert size={14} aria-hidden="true" />
+                {raw.skippedRows} malformed rows skipped
+              </span>
             )}
           </p>
         </div>
@@ -69,7 +73,7 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
       <div
         role="tablist"
         aria-label="Analysis sections"
-        className="no-print mb-6 flex gap-1 overflow-x-auto border-b border-slate-200 dark:border-slate-800"
+        className="no-print mb-6 flex gap-1 overflow-x-auto border-b border-border"
       >
         {TABS.map((t) => (
           <button
@@ -78,15 +82,15 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
             aria-selected={tab === t}
             onClick={() => setTab(t)}
             className={cn(
-              'whitespace-nowrap border-b-2 px-4 py-2.5 text-sm font-semibold transition',
+              'whitespace-nowrap border-b-2 px-4 py-2.5 text-sm font-medium transition-colors',
               tab === t
-                ? 'border-violet text-violet'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200',
+                ? 'border-accent text-accent'
+                : 'border-transparent text-muted hover:text-fg',
             )}
           >
             {t}
             {t === 'Whispers' && insights.length > 0 && (
-              <span className="ml-1.5 rounded-full bg-violet px-1.5 text-xs text-white">
+              <span className="tabular ml-1.5 rounded-full bg-accent-soft px-1.5 text-xs font-medium text-accent">
                 {insights.length}
               </span>
             )}

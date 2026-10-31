@@ -18,15 +18,15 @@ export function ShortcutsDialog({ open, onClose }: { open: boolean; onClose: () 
       onClick={onClose}
     >
       <div
-        className="animate-scale-in w-full max-w-sm rounded-2xl bg-white p-6 shadow-soft dark:bg-slate-900"
+        className="animate-scale-in w-full max-w-sm rounded-card border border-border bg-surface p-6 shadow-popover"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="mb-4 text-lg font-bold">Keyboard shortcuts</h2>
+        <h2 className="mb-4 text-base font-semibold">Keyboard shortcuts</h2>
         <ul className="space-y-2">
           {SHORTCUTS.map((s) => (
             <li key={s.keys} className="flex items-center justify-between">
-              <span className="text-sm text-slate-600 dark:text-slate-300">{s.description}</span>
-              <kbd className="rounded-md border border-slate-300 bg-slate-100 px-2 py-0.5 text-xs font-semibold dark:border-slate-600 dark:bg-slate-800">
+              <span className="text-sm text-muted">{s.description}</span>
+              <kbd className="rounded-control border border-border bg-surface-2 px-2 py-0.5 font-mono text-xs font-semibold">
                 {s.keys}
               </kbd>
             </li>
@@ -34,7 +34,7 @@ export function ShortcutsDialog({ open, onClose }: { open: boolean; onClose: () 
         </ul>
         <button
           onClick={onClose}
-          className="mt-5 w-full rounded-xl bg-brand-gradient py-2 font-semibold text-white"
+          className="mt-6 w-full rounded-control bg-accent py-2 text-sm font-medium text-accent-fg hover:opacity-90"
         >
           Got it
         </button>

@@ -1,9 +1,16 @@
 'use client';
 
 import { createContext, useCallback, useContext, useState } from 'react';
+import { CheckCircle2, CircleAlert, Info, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type ToastKind = 'success' | 'error' | 'info';
+
+const TOAST_ICON: Record<ToastKind, LucideIcon> = {
+  success: CheckCircle2,
+  error: CircleAlert,
+  info: Info,
+};
 
 interface Toast {
   id: number;
@@ -38,20 +45,24 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         aria-live="polite"
         aria-atomic="true"
       >
-        {toasts.map((t) => (
-          <div
-            key={t.id}
-            role="status"
-            className={cn(
-              'animate-fade-in rounded-xl px-4 py-3 text-sm font-medium text-white shadow-soft',
-              t.kind === 'success' && 'bg-teal',
-              t.kind === 'error' && 'bg-rose-500',
-              t.kind === 'info' && 'bg-slate-800',
-            )}
-          >
-            {t.message}
-          </div>
-        ))}
+        {toasts.map((t) => {
+          const Icon = TOAST_ICON[t.kind];
+          return (
+            <div
+              key={t.id}
+              role="status"
+              className={cn(
+                'animate-fade-in flex items-center gap-2 rounded-control border border-border bg-surface px-4 py-3 text-sm font-medium shadow-popover',
+                t.kind === 'success' && 'text-discovery',
+                t.kind === 'error' && 'text-danger',
+                t.kind === 'info' && 'text-info',
+              )}
+            >
+              <Icon size={16} aria-hidden="true" />
+              <span className="text-fg">{t.message}</span>
+            </div>
+          );
+        })}
       </div>
     </ToastContext.Provider>
   );

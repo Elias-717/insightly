@@ -13,7 +13,7 @@ import {
 import type { ColumnProfile } from '@/types';
 import { histogram } from '@/lib/analysis/stats';
 import { ChartFrame } from './ChartFrame';
-import { CHART_ACCENT, CHART_GRID } from './palette';
+import { chartAccent, CHART_GRID } from './palette';
 
 export function Histogram({ column }: { column: ColumnProfile }) {
   const [bins, setBins] = useState(10);
@@ -53,7 +53,7 @@ export function Histogram({ column }: { column: ColumnProfile }) {
             contentStyle={{ borderRadius: 8, fontSize: 12 }}
             labelFormatter={(l) => `Range ${l}`}
           />
-          <Bar dataKey="count" fill={CHART_ACCENT} radius={[4, 4, 0, 0]} />
+          <Bar dataKey="count" fill={chartAccent()} radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </ChartFrame>

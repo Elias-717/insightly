@@ -42,7 +42,7 @@ export function WhispersPanel({ dataset, insights, onSelectInsight }: WhispersPa
 
       {insights.length === 0 ? (
         <Card className="flex items-center justify-center gap-2 py-8 text-center text-sm text-muted">
-          <CheckCircle2 size={18} className="text-discovery" aria-hidden="true" />
+          <CheckCircle2 size={18} className="text-success" aria-hidden="true" />
           No notable issues found. This dataset looks clean.
         </Card>
       ) : (

@@ -12,11 +12,11 @@ export function TypeBadge({ type }: { type: ColumnType }) {
   );
 }
 
-// Semantic tokens: amber=warning, blue=info, green=discovery. Always icon + label.
+// Semantic tokens: info=blue, warning=amber, discovery=green. Always icon + label.
 const severityStyle: Record<InsightSeverity, string> = {
-  Info: 'text-info bg-info-soft',
-  Warning: 'text-warning bg-warning-soft',
-  Discovery: 'text-discovery bg-discovery-soft',
+  Info: 'text-info-text bg-info-soft',
+  Warning: 'text-warning-text bg-warning-soft',
+  Discovery: 'text-success-text bg-success-soft',
 };
 
 export function SeverityBadge({ severity }: { severity: InsightSeverity }) {

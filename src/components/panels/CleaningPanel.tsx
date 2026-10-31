@@ -59,7 +59,7 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
             <div
               className={cn(
                 'stat-value text-3xl font-semibold tabular',
-                after >= before ? 'text-discovery' : 'text-danger',
+                after >= before ? 'text-success' : 'text-danger',
               )}
             >
               {after}
@@ -119,7 +119,7 @@ export function CleaningPanel({ dataset }: CleaningPanelProps) {
             downloadCsv(working, `cleaned-${dataset.raw.fileName}`);
             toast('Cleaned CSV downloaded', 'success');
           }}
-          className="inline-flex items-center gap-2 rounded-control bg-accent px-4 py-2 text-sm font-medium text-accent-fg transition-colors hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-control bg-accent px-4 py-2 text-sm font-medium text-accent-fg transition-colors hover:bg-accent-hover"
         >
           <Download size={18} aria-hidden="true" />
           Download cleaned CSV

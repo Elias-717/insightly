@@ -4,12 +4,44 @@ import { useState } from 'react';
 import { Info } from 'lucide-react';
 import type { QualityScore } from '@/types';
 
-/** Clean accent ring showing the data quality score, with a how-it's-calculated popover. */
+/** Ring stroke color (indicator) by grade: A/B good, C warning, D orange, F error. */
+function gradeRing(grade: string): string {
+  switch (grade) {
+    case 'A':
+    case 'B':
+      return 'text-success';
+    case 'C':
+      return 'text-warning';
+    case 'D':
+      return 'text-orange';
+    default:
+      return 'text-danger';
+  }
+}
+
+/** AA-contrast text color by grade for the small grade label. */
+function gradeText(grade: string): string {
+  switch (grade) {
+    case 'A':
+    case 'B':
+      return 'text-success-text';
+    case 'C':
+      return 'text-warning-text';
+    case 'D':
+      return 'text-orange';
+    default:
+      return 'text-danger-text';
+  }
+}
+
+/** Grade-colored ring showing the data quality score, with a how-it's-calculated popover. */
 export function QualityGauge({ quality }: { quality: QualityScore }) {
   const [open, setOpen] = useState(false);
   const radius = 52;
   const circumference = 2 * Math.PI * radius;
   const dash = (quality.score / 100) * circumference;
+  const ringColor = gradeRing(quality.grade);
+  const textColor = gradeText(quality.grade);
 
   return (
     <div className="relative flex flex-col items-center">
@@ -29,12 +61,12 @@ export function QualityGauge({ quality }: { quality: QualityScore }) {
             strokeLinecap="round"
             strokeDasharray={`${dash} ${circumference}`}
             transform="rotate(-90 66 66)"
-            className="stroke-accent motion-safe:transition-all motion-safe:duration-150"
+            className={`${ringColor} stroke-current motion-safe:transition-all motion-safe:duration-150`}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="stat-value text-3xl font-semibold tabular">{quality.score}</span>
-          <span className="text-sm font-medium text-muted">Grade {quality.grade}</span>
+          <span className={`text-sm font-semibold ${textColor}`}>Grade {quality.grade}</span>
         </div>
       </div>
 

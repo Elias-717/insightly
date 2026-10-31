@@ -53,9 +53,9 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               role="status"
               className={cn(
                 'animate-fade-in flex items-center gap-2 rounded-control border border-border bg-surface px-4 py-3 text-sm font-medium shadow-popover',
-                t.kind === 'success' && 'text-discovery',
-                t.kind === 'error' && 'text-danger',
-                t.kind === 'info' && 'text-info',
+                t.kind === 'success' && 'text-success-text',
+                t.kind === 'error' && 'text-danger-text',
+                t.kind === 'info' && 'text-info-text',
               )}
             >
               <Icon size={16} aria-hidden="true" />

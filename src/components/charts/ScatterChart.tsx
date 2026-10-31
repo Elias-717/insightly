@@ -15,7 +15,7 @@ import type { Dataset } from '@/types';
 import { columnValues } from '@/lib/analysis/analyze';
 import { parseNumber } from '@/lib/analysis/clean-value';
 import { ChartFrame } from './ChartFrame';
-import { CHART_ACCENT, CHART_GRID } from './palette';
+import { chartAccent, CHART_GRID } from './palette';
 
 export function ScatterPlot({ dataset }: { dataset: Dataset }) {
   const numericCols = dataset.columns.filter((c) => c.type === 'number' || c.type === 'integer');
@@ -89,7 +89,7 @@ export function ScatterPlot({ dataset }: { dataset: Dataset }) {
             cursor={{ strokeDasharray: '3 3' }}
             contentStyle={{ borderRadius: 8, fontSize: 12 }}
           />
-          <Scatter data={data} fill={CHART_ACCENT} fillOpacity={0.6} />
+          <Scatter data={data} fill={chartAccent()} fillOpacity={0.6} />
         </RScatterChart>
       </ResponsiveContainer>
     </ChartFrame>

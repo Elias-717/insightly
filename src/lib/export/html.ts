@@ -37,23 +37,23 @@ export function buildHtmlReport(dataset: Dataset, insights: Insight[]): string {
 <title>Insightlet report — ${escapeHtml(dataset.raw.fileName)}</title>
 <style>
   :root { color-scheme: light; }
-  body { font-family: Inter, system-ui, sans-serif; margin: 0; padding: 40px; color: #1e293b; background: #f8fafc; }
+  body { font-family: Inter, system-ui, sans-serif; margin: 0; padding: 40px; color: #0F172A; background: #F8FAFC; }
   .wrap { max-width: 900px; margin: 0 auto; }
-  h1 { background: linear-gradient(135deg,#7C3AED,#14B8A6); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .card { background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 4px 24px -4px rgba(0,0,0,.08); margin-bottom: 24px; }
+  h1 { color: #2563EB; letter-spacing: -0.02em; }
+  .card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 16px; }
   .stat { text-align: center; }
-  .stat .num { font-size: 28px; font-weight: 700; }
-  .muted { color: #64748b; font-size: 14px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e2e8f0; }
+  .stat .num { font-size: 28px; font-weight: 700; color: #0F172A; font-variant-numeric: tabular-nums; }
+  .muted { color: #64748B; font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #E2E8F0; }
   ul { list-style: none; padding: 0; }
-  li { padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
-  .sev { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-right: 8px; }
-  .sev-warning { background: #fef3c7; color: #92400e; }
-  .sev-discovery { background: #ede9fe; color: #5b21b6; }
-  .sev-info { background: #cffafe; color: #155e75; }
-  .gauge { font-size: 48px; font-weight: 800; }
+  li { padding: 12px 0; border-bottom: 1px solid #F1F5F9; }
+  .sev { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-right: 8px; }
+  .sev-warning { background: #FEF3C7; color: #B45309; }
+  .sev-discovery { background: #DCFCE7; color: #15803D; }
+  .sev-info { background: #E0F2FE; color: #0369A1; }
+  .gauge { font-size: 48px; font-weight: 800; color: #2563EB; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>

@@ -15,7 +15,7 @@ import { columnValues } from '@/lib/analysis/analyze';
 import { isMissing } from '@/lib/analysis/clean-value';
 import type { RawDataset } from '@/types';
 import { ChartFrame } from './ChartFrame';
-import { CHART_ACCENT, CHART_GRID } from './palette';
+import { chartAccent, CHART_GRID } from './palette';
 
 export function CategoryBar({ column, raw }: { column: ColumnProfile; raw: RawDataset }) {
   const data = useMemo(() => {
@@ -49,7 +49,7 @@ export function CategoryBar({ column, raw }: { column: ColumnProfile; raw: RawDa
           <XAxis type="number" tick={{ fontSize: 11 }} allowDecimals={false} />
           <YAxis dataKey="value" type="category" width={110} tick={{ fontSize: 11 }} />
           <Tooltip contentStyle={{ borderRadius: 8, fontSize: 12 }} />
-          <Bar dataKey="count" fill={CHART_ACCENT} radius={[0, 4, 4, 0]} />
+          <Bar dataKey="count" fill={chartAccent()} radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </ChartFrame>

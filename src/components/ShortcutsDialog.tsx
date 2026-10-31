@@ -34,7 +34,7 @@ export function ShortcutsDialog({ open, onClose }: { open: boolean; onClose: () 
         </ul>
         <button
           onClick={onClose}
-          className="mt-6 w-full rounded-control bg-accent py-2 text-sm font-medium text-accent-fg hover:opacity-90"
+          className="mt-6 w-full rounded-control bg-accent py-2 text-sm font-medium text-accent-fg hover:bg-accent-hover"
         >
           Got it
         </button>

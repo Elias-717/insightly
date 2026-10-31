@@ -5,50 +5,64 @@
 /*
  * Design tokens. All colors are "R G B" triplets so Tailwind's
  * rgb(var(--token) / <alpha-value>) can apply opacity. Contrast was checked to
- * meet WCAG AA for text in both light and dark modes.
+ * meet WCAG AA for text in both light and dark modes. Blue "data tool" theme.
  */
 :root {
-  --bg: 249 250 251; /* gray-50 */
-  --surface: 255 255 255; /* white */
-  --surface-2: 243 244 246; /* gray-100 */
-  --border: 229 231 235; /* gray-200 */
-  --fg: 17 24 39; /* gray-900 */
-  --muted: 75 85 99; /* gray-600 (AA on surface) */
+  --bg: 248 250 252; /* #F8FAFC */
+  --surface: 255 255 255; /* #FFFFFF */
+  --surface-2: 241 245 249; /* slate-100 */
+  --border: 226 232 240; /* #E2E8F0 */
+  --fg: 15 23 42; /* #0F172A text-primary */
+  --fg-secondary: 71 85 105; /* #475569 text-secondary */
+  --muted: 100 116 139; /* #64748B text-muted */
 
-  --accent: 79 70 229; /* indigo-600 */
+  --accent: 37 99 235; /* #2563EB */
+  --accent-hover: 29 78 216; /* #1D4ED8 */
   --accent-fg: 255 255 255;
-  --accent-soft: 238 242 255; /* indigo-50 */
+  --accent-soft: 239 246 255; /* #EFF6FF */
 
-  --warning: 180 83 9; /* amber-700 (AA text) */
-  --warning-soft: 254 243 199; /* amber-100 */
-  --info: 29 78 216; /* blue-700 */
-  --info-soft: 219 234 254; /* blue-100 */
-  --discovery: 21 128 61; /* green-700 */
-  --discovery-soft: 220 252 231; /* green-100 */
-  --danger: 185 28 28; /* red-700 */
-  --danger-soft: 254 226 226; /* red-100 */
+  --success: 22 163 74; /* #16A34A indicator/ring */
+  --success-text: 21 128 61; /* #15803D darker for AA text */
+  --success-soft: 220 252 231;
+  --warning: 217 119 6; /* #D97706 indicator */
+  --warning-text: 180 83 9; /* #B45309 darker for AA text */
+  --warning-soft: 254 243 199;
+  --danger: 220 38 38; /* #DC2626 indicator */
+  --danger-text: 185 28 28; /* #B91C1C darker for AA text */
+  --danger-soft: 254 226 226;
+  --info: 14 165 233; /* #0EA5E9 brand hue (indicators) */
+  --info-text: 3 105 161; /* #0369A1 darker sky for AA text */
+  --info-soft: 224 242 254;
+  --orange: 194 65 12; /* #C2410C grade D (AA on light) */
 }
 
 .dark {
-  --bg: 9 9 11; /* near-black */
-  --surface: 24 24 27; /* zinc-900 */
-  --surface-2: 39 39 42; /* zinc-800 */
-  --border: 39 39 42; /* zinc-800 */
-  --fg: 244 244 245; /* zinc-100 */
-  --muted: 161 161 170; /* zinc-400 (AA on dark surface) */
+  --bg: 11 18 32; /* #0B1220 */
+  --surface: 17 27 46; /* #111B2E */
+  --surface-2: 30 42 68; /* #1E2A44 */
+  --border: 30 42 68; /* #1E2A44 */
+  --fg: 241 245 249; /* #F1F5F9 */
+  --fg-secondary: 203 213 225; /* #CBD5E1 */
+  --muted: 148 163 184; /* #94A3B8 */
 
-  --accent: 129 140 248; /* indigo-400 (AA on dark) */
-  --accent-fg: 17 24 39;
-  --accent-soft: 30 27 75; /* indigo-950 */
+  --accent: 59 130 246; /* #3B82F6 */
+  --accent-hover: 96 165 250; /* #60A5FA */
+  --accent-fg: 255 255 255;
+  --accent-soft: 23 37 84; /* #172554 */
 
-  --warning: 252 211 77; /* amber-300 */
+  --success: 74 222 128; /* #4ADE80 */
+  --success-text: 74 222 128; /* #4ADE80 reads fine on dark */
+  --success-soft: 5 46 22;
+  --warning: 251 191 36; /* #FBBF24 */
+  --warning-text: 251 191 36; /* reads fine on dark soft bg */
   --warning-soft: 69 46 6;
-  --info: 147 197 253; /* blue-300 */
-  --info-soft: 23 37 84;
-  --discovery: 134 239 172; /* green-300 */
-  --discovery-soft: 5 46 22;
-  --danger: 252 165 165; /* red-300 */
+  --danger: 248 113 113; /* #F87171 */
+  --danger-text: 248 113 113; /* reads fine on dark soft bg */
   --danger-soft: 69 10 10;
+  --info: 56 189 248; /* #38BDF8 */
+  --info-text: 56 189 248; /* #38BDF8 reads fine on dark soft bg */
+  --info-soft: 8 47 73;
+  --orange: 251 146 60; /* orange-400 for dark */
 }
 
 html {

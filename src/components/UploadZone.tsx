@@ -105,7 +105,7 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
       {state.status === 'error' && (
         <div
           role="alert"
-          className="mt-4 flex items-start gap-2 rounded-card border border-border bg-danger-soft p-3 text-sm text-danger"
+          className="mt-4 flex items-start gap-2 rounded-card border border-border bg-danger-soft p-3 text-sm text-danger-text"
         >
           <CircleAlert size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
           <div>

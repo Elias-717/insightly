@@ -45,8 +45,8 @@ export async function exportPdfReport(
     }
   };
 
-  // Cover.
-  doc.setFillColor(124, 58, 237);
+  // Cover (accent blue #2563EB).
+  doc.setFillColor(37, 99, 235);
   doc.rect(0, 0, pageWidth, 120, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');

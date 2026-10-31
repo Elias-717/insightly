@@ -2,7 +2,7 @@
 
 import type { Dataset } from '@/types';
 import { ChartFrame } from './ChartFrame';
-import { correlationColor } from './palette';
+import { correlationColor, correlationTextColor } from './palette';
 
 export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
   const { columns, lookup } = dataset.correlation;
@@ -22,7 +22,7 @@ export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
     <ChartFrame
       id="chart-correlation"
       title="Correlation heatmap"
-      summary={`Pearson correlation across ${columns.length} numeric columns. Strongest relationship: ${strongest.a} and ${strongest.b} at r = ${strongest.v.toFixed(2)}. Indigo is positive, slate is negative; darker means stronger.`}
+      summary={`Pearson correlation across ${columns.length} numeric columns. Strongest relationship: ${strongest.a} and ${strongest.b} at r = ${strongest.v.toFixed(2)}. Orange is positive, blue is negative; stronger color means stronger correlation.`}
     >
       <div className="overflow-x-auto scroll-thin">
         <table className="border-collapse text-xs">
@@ -54,8 +54,8 @@ export function CorrelationHeatmap({ dataset }: { dataset: Dataset }) {
                   return (
                     <td
                       key={colName}
-                      className="tabular h-10 w-10 min-w-[40px] text-center font-mono text-[10px] text-fg"
-                      style={{ backgroundColor: correlationColor(v) }}
+                      className="tabular h-10 w-10 min-w-[40px] border border-border text-center font-mono text-[10px]"
+                      style={{ backgroundColor: correlationColor(v), color: correlationTextColor(v) }}
                       title={`${rowName} × ${colName}: r = ${v.toFixed(2)}`}
                     >
                       {v.toFixed(2)}

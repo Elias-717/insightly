@@ -60,7 +60,7 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
           <p className="tabular text-sm text-muted">
             {dataset.overview.rows.toLocaleString()} rows · {dataset.overview.columns} columns
             {raw.skippedRows > 0 && (
-              <span className="ml-2 inline-flex items-center gap-1 text-warning">
+              <span className="ml-2 inline-flex items-center gap-1 text-warning-text">
                 <TriangleAlert size={14} aria-hidden="true" />
                 {raw.skippedRows} malformed rows skipped
               </span>
@@ -90,7 +90,7 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
           >
             {t}
             {t === 'Whispers' && insights.length > 0 && (
-              <span className="tabular ml-1.5 rounded-full bg-accent-soft px-1.5 text-xs font-medium text-accent">
+              <span className="tabular ml-1.5 rounded-full bg-accent px-1.5 text-xs font-medium text-accent-fg">
                 {insights.length}
               </span>
             )}

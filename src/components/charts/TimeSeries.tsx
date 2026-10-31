@@ -14,7 +14,7 @@ import type { Dataset } from '@/types';
 import { columnValues } from '@/lib/analysis/analyze';
 import { parseDate, parseNumber } from '@/lib/analysis/clean-value';
 import { ChartFrame } from './ChartFrame';
-import { CHART_ACCENT, CHART_GRID } from './palette';
+import { chartAccent, CHART_GRID } from './palette';
 
 type Granularity = 'day' | 'week' | 'month';
 type Aggregation = 'sum' | 'mean' | 'count';
@@ -118,7 +118,7 @@ export function TimeSeries({ dataset }: { dataset: Dataset }) {
           <Line
             type="monotone"
             dataKey="value"
-            stroke={CHART_ACCENT}
+            stroke={chartAccent()}
             strokeWidth={2}
             dot={{ r: 2 }}
             activeDot={{ r: 5 }}

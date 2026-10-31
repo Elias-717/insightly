@@ -29,7 +29,7 @@ export default function GlobalError({
       </div>
       <button
         onClick={reset}
-        className="inline-flex items-center gap-2 rounded-control bg-accent px-5 py-2.5 text-sm font-medium text-accent-fg transition-colors hover:opacity-90"
+        className="inline-flex items-center gap-2 rounded-control bg-accent px-5 py-2.5 text-sm font-medium text-accent-fg transition-colors hover:bg-accent-hover"
       >
         <RotateCcw size={18} aria-hidden="true" />
         Try again

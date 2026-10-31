@@ -1,57 +1,57 @@
 <svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
-  <rect width="1200" height="720" fill="#F9FAFB"/>
+  <rect width="1200" height="720" fill="#F8FAFC"/>
   <!-- header -->
   <rect x="0" y="0" width="1200" height="56" fill="#FFFFFF"/>
-  <line x1="0" y1="56" x2="1200" y2="56" stroke="#E5E7EB"/>
-  <rect x="32" y="22" width="12" height="12" rx="2" fill="#4F46E5"/>
-  <text x="54" y="33" font-size="15" font-weight="600" fill="#111827">Insightlet</text>
+  <line x1="0" y1="56" x2="1200" y2="56" stroke="#E2E8F0"/>
+  <rect x="32" y="22" width="12" height="12" rx="2" fill="#2563EB"/>
+  <text x="54" y="33" font-size="15" font-weight="600" fill="#0F172A">Insightlet</text>
   <!-- tabs -->
-  <text x="32" y="96" font-size="13" font-weight="600" fill="#4F46E5">Overview</text>
-  <text x="120" y="96" font-size="13" fill="#6B7280">Columns</text>
-  <text x="200" y="96" font-size="13" fill="#6B7280">Charts</text>
-  <text x="270" y="96" font-size="13" fill="#6B7280">Whispers</text>
-  <line x1="32" y1="108" x2="90" y2="108" stroke="#4F46E5" stroke-width="2"/>
-  <line x1="32" y1="108" x2="1168" y2="108" stroke="#E5E7EB"/>
+  <text x="32" y="96" font-size="13" font-weight="600" fill="#2563EB">Overview</text>
+  <text x="120" y="96" font-size="13" fill="#64748B">Columns</text>
+  <text x="200" y="96" font-size="13" fill="#64748B">Charts</text>
+  <text x="270" y="96" font-size="13" fill="#64748B">Whispers</text>
+  <line x1="32" y1="108" x2="90" y2="108" stroke="#2563EB" stroke-width="2"/>
+  <line x1="32" y1="108" x2="1168" y2="108" stroke="#E2E8F0"/>
   <!-- overview cards -->
   <g>
-    <rect x="32" y="132" width="260" height="92" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
-    <text x="52" y="162" font-size="12" fill="#6B7280">Rows</text>
-    <text x="52" y="196" font-size="28" font-weight="600" fill="#111827">20</text>
-    <rect x="312" y="132" width="260" height="92" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
-    <text x="332" y="162" font-size="12" fill="#6B7280">Columns</text>
-    <text x="332" y="196" font-size="28" font-weight="600" fill="#111827">7</text>
-    <rect x="592" y="132" width="260" height="92" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
-    <text x="612" y="162" font-size="12" fill="#6B7280">Missing cells</text>
-    <text x="612" y="196" font-size="28" font-weight="600" fill="#111827">0.0%</text>
-    <rect x="872" y="132" width="296" height="92" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
-    <text x="892" y="162" font-size="12" fill="#6B7280">Duplicate rows</text>
-    <text x="892" y="196" font-size="28" font-weight="600" fill="#111827">0</text>
+    <rect x="32" y="132" width="260" height="92" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="52" y="162" font-size="12" fill="#64748B">Rows</text>
+    <text x="52" y="196" font-size="28" font-weight="600" fill="#0F172A">20</text>
+    <rect x="312" y="132" width="260" height="92" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="332" y="162" font-size="12" fill="#64748B">Columns</text>
+    <text x="332" y="196" font-size="28" font-weight="600" fill="#0F172A">7</text>
+    <rect x="592" y="132" width="260" height="92" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="612" y="162" font-size="12" fill="#64748B">Missing cells</text>
+    <text x="612" y="196" font-size="28" font-weight="600" fill="#0F172A">0.0%</text>
+    <rect x="872" y="132" width="296" height="92" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="892" y="162" font-size="12" fill="#64748B">Duplicate rows</text>
+    <text x="892" y="196" font-size="28" font-weight="600" fill="#0F172A">0</text>
   </g>
   <!-- quality ring -->
-  <rect x="32" y="248" width="360" height="260" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
-  <text x="52" y="282" font-size="13" font-weight="600" fill="#111827">Data quality</text>
-  <circle cx="212" cy="390" r="64" fill="none" stroke="#E5E7EB" stroke-width="12"/>
-  <path d="M212 326 a64 64 0 1 1 -45 109" fill="none" stroke="#4F46E5" stroke-width="12" stroke-linecap="round"/>
-  <text x="212" y="392" font-size="34" font-weight="600" fill="#111827" text-anchor="middle">92</text>
-  <text x="212" y="414" font-size="13" font-weight="600" fill="#4F46E5" text-anchor="middle">Grade A</text>
+  <rect x="32" y="248" width="360" height="260" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="52" y="282" font-size="13" font-weight="600" fill="#0F172A">Data quality</text>
+  <circle cx="212" cy="390" r="64" fill="none" stroke="#E2E8F0" stroke-width="12"/>
+  <path d="M212 326 a64 64 0 1 1 -45 109" fill="none" stroke="#16A34A" stroke-width="12" stroke-linecap="round"/>
+  <text x="212" y="392" font-size="34" font-weight="600" fill="#0F172A" text-anchor="middle">92</text>
+  <text x="212" y="414" font-size="13" font-weight="600" fill="#16A34A" text-anchor="middle">Grade A</text>
   <!-- insights -->
-  <rect x="412" y="248" width="756" height="260" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
-  <text x="432" y="282" font-size="13" font-weight="600" fill="#111827">Whispers</text>
+  <rect x="412" y="248" width="756" height="260" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="432" y="282" font-size="13" font-weight="600" fill="#0F172A">Whispers</text>
   <g>
-    <rect x="432" y="300" width="64" height="22" rx="6" fill="#DBEAFE"/>
-    <text x="444" y="315" font-size="11" font-weight="600" fill="#1D4ED8">Info</text>
-    <text x="508" y="316" font-size="13" fill="#111827">Overall data quality is 92/100 (grade A).</text>
+    <rect x="432" y="300" width="64" height="22" rx="6" fill="#E0F2FE"/>
+    <text x="444" y="315" font-size="11" font-weight="600" fill="#0369A1">Info</text>
+    <text x="508" y="316" font-size="13" fill="#0F172A">Overall data quality is 92/100 (grade A).</text>
   </g>
   <g>
     <rect x="432" y="340" width="90" height="22" rx="6" fill="#DCFCE7"/>
     <text x="444" y="355" font-size="11" font-weight="600" fill="#15803D">Discovery</text>
-    <text x="534" y="356" font-size="13" fill="#111827">'score' and 'grade' are strongly correlated.</text>
+    <text x="534" y="356" font-size="13" fill="#0F172A">'score' and 'grade' are strongly correlated.</text>
   </g>
   <g>
     <rect x="432" y="380" width="86" height="22" rx="6" fill="#FEF3C7"/>
     <text x="444" y="395" font-size="11" font-weight="600" fill="#B45309">Warning</text>
-    <text x="530" y="396" font-size="13" fill="#111827">'score' has 2 outliers below the typical range.</text>
+    <text x="530" y="396" font-size="13" fill="#0F172A">'score' has 2 outliers below the typical range.</text>
   </g>
-  <line x1="432" y1="420" x2="1148" y2="420" stroke="#F3F4F6"/>
-  <line x1="432" y1="456" x2="1148" y2="456" stroke="#F3F4F6"/>
+  <line x1="432" y1="420" x2="1148" y2="420" stroke="#F1F5F9"/>
+  <line x1="432" y1="456" x2="1148" y2="456" stroke="#F1F5F9"/>
 </svg>

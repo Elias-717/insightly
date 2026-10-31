@@ -2,7 +2,7 @@
 
 import type { ColumnProfile } from '@/types';
 import { ChartFrame } from './ChartFrame';
-import { CHART_ACCENT, CHART_MUTED } from './palette';
+import { chartAccent, CHART_MUTED } from './palette';
 import { formatNumber } from '@/lib/utils';
 
 /** A compact box-plot style summary rendered with SVG. */
@@ -12,6 +12,7 @@ export function BoxSummary({ column }: { column: ColumnProfile }) {
 
   const range = n.max - n.min || 1;
   const scale = (v: number) => ((v - n.min) / range) * 100;
+  const accent = chartAccent();
 
   return (
     <ChartFrame
@@ -29,12 +30,13 @@ export function BoxSummary({ column }: { column: ColumnProfile }) {
             y="10"
             width={Math.max(0.5, scale(n.q3) - scale(n.q1))}
             height="20"
-            fill="rgba(79, 70, 229, 0.2)"
-            stroke={CHART_ACCENT}
+            fill={accent}
+            fillOpacity={0.18}
+            stroke={accent}
             strokeWidth="0.5"
           />
           {/* median */}
-          <line x1={scale(n.median)} y1="10" x2={scale(n.median)} y2="30" stroke={CHART_ACCENT} strokeWidth="1.2" />
+          <line x1={scale(n.median)} y1="10" x2={scale(n.median)} y2="30" stroke={accent} strokeWidth="1.2" />
           {/* caps */}
           <line x1={scale(n.min)} y1="14" x2={scale(n.min)} y2="26" stroke={CHART_MUTED} strokeWidth="0.5" />
           <line x1={scale(n.max)} y1="14" x2={scale(n.max)} y2="26" stroke={CHART_MUTED} strokeWidth="0.5" />

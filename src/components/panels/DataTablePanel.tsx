@@ -116,8 +116,8 @@ export const DataTablePanel = forwardRef<DataTableHandle, DataTablePanelProps>(
     const cellClass = (value: CellValue, rowOutlier: boolean) =>
       cn(
         'truncate border-b border-border px-3 py-1.5 font-mono text-[13px] tabular',
-        isMissing(value) && 'bg-danger-soft text-danger',
-        rowOutlier && 'bg-warning-soft font-medium text-warning',
+        isMissing(value) && 'bg-danger-soft text-danger-text',
+        rowOutlier && 'bg-warning-soft font-medium text-warning-text',
       );
 
     return (

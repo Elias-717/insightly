@@ -3,6 +3,29 @@ export function cn(...parts: (string | false | null | undefined)[]): string {
   return parts.filter(Boolean).join(' ');
 }
 
+/**
+ * Pluralize a noun based on a count. Returns just the noun (singular/plural);
+ * pass `plural` when it is not formed by appending "s".
+ *
+ *   pluralize(1, 'row') -> 'row'
+ *   pluralize(2, 'row') -> 'rows'
+ *   pluralize(2, 'entry', 'entries') -> 'entries'
+ */
+export function pluralize(count: number, singular: string, plural?: string): string {
+  return Math.abs(count) === 1 ? singular : (plural ?? `${singular}s`);
+}
+
+/**
+ * Format a count with its (pluralized) noun and thousands separators.
+ *
+ *   countNoun(1, 'malformed row') -> '1 malformed row'
+ *   countNoun(2, 'malformed row') -> '2 malformed rows'
+ *   countNoun(3, 'entry', 'entries') -> '3 entries'
+ */
+export function countNoun(count: number, singular: string, plural?: string): string {
+  return `${formatNumber(count)} ${pluralize(count, singular, plural)}`;
+}
+
 /** Format a byte count as a human-readable size. */
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;

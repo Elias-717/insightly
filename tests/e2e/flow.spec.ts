@@ -46,9 +46,10 @@ test.describe('Insightlet end-to-end flow', () => {
 
     // Export a Markdown report (deterministic, no canvas needed).
     await page.getByRole('tab', { name: /Whispers/ }).click();
+    // Open the Export dropdown and choose Markdown.
+    await page.getByRole('button', { name: 'Export' }).click();
     const downloadPromise = page.waitForEvent('download');
-    // The export bar is at the top of the dashboard.
-    await page.getByRole('button', { name: 'Export Markdown' }).click();
+    await page.getByRole('menuitem', { name: 'Markdown' }).click();
     const download = await downloadPromise;
     expect(download.suggestedFilename()).toContain('.md');
   });

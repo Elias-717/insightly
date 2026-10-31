@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Info } from 'lucide-react';
-import type { QualityScore } from '@/types';
+import { Info, Minus } from 'lucide-react';
+import type { Dataset, QualityComponent, QualityScore } from '@/types';
+import { qualityVerdict, topQualityReasons } from '@/lib/overview/summary';
 
 /** Ring stroke color (indicator) by grade: A/B good, C warning, D orange, F error. */
 function gradeRing(grade: string): string {
@@ -34,21 +35,30 @@ function gradeText(grade: string): string {
   }
 }
 
-/** Grade-colored ring showing the data quality score, with a how-it's-calculated popover. */
-export function QualityGauge({ quality }: { quality: QualityScore }) {
+const REASON_LABEL: Record<QualityComponent['key'], string> = {
+  completeness: 'Missing values',
+  uniqueness: 'Duplicate rows',
+  consistency: 'Mixed content',
+  outliers: 'Outliers',
+};
+
+/** Grade-colored ring showing the data quality score, verdict, and top reasons. */
+export function QualityGauge({ quality, dataset }: { quality: QualityScore; dataset?: Dataset }) {
   const [open, setOpen] = useState(false);
   const radius = 52;
   const circumference = 2 * Math.PI * radius;
-  const dash = (quality.score / 100) * circumference;
+  const score = Math.round(quality.score);
+  const dash = (score / 100) * circumference;
   const ringColor = gradeRing(quality.grade);
   const textColor = gradeText(quality.grade);
+  const reasons = dataset ? topQualityReasons(dataset, 3) : [];
 
   return (
-    <div className="relative flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div
         className="relative"
         role="img"
-        aria-label={`Data quality score ${quality.score} out of 100, grade ${quality.grade}`}
+        aria-label={`Data quality score ${score} out of 100, grade ${quality.grade}`}
       >
         <svg width="132" height="132" viewBox="0 0 132 132">
           <circle cx="66" cy="66" r={radius} fill="none" strokeWidth="10" className="stroke-border" />
@@ -65,15 +75,34 @@ export function QualityGauge({ quality }: { quality: QualityScore }) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="stat-value text-3xl font-semibold tabular">{quality.score}</span>
+          <span className="stat-value text-3xl font-semibold tabular">{score}</span>
           <span className={`text-sm font-semibold ${textColor}`}>Grade {quality.grade}</span>
         </div>
       </div>
 
+      {dataset && (
+        <p className="mt-2 text-center text-sm text-fg-secondary">{qualityVerdict(score)}</p>
+      )}
+
+      {reasons.length > 0 && (
+        <ul className="mt-3 w-full space-y-1.5">
+          {reasons.map((r) => (
+            <li key={r.key} className="flex items-start gap-2 text-xs">
+              <Minus size={13} className="mt-0.5 shrink-0 text-danger-text" aria-hidden="true" />
+              <span className="min-w-0">
+                <span className="font-medium">{REASON_LABEL[r.key]}</span>
+                <span className="tabular text-muted"> · −{r.pointsLost} pts</span>
+                <span className="block text-muted">{r.label}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline"
+        className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline"
       >
         <Info size={13} aria-hidden="true" />
         How is this calculated?

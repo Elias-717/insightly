@@ -36,7 +36,7 @@ export function Header({
           <button
             onClick={onShowShortcuts}
             aria-label="Keyboard shortcuts"
-            title="Keyboard shortcuts"
+            title="Keyboard shortcuts (press ?)"
             className={iconBtn}
           >
             <Keyboard size={18} aria-hidden="true" />
@@ -44,7 +44,7 @@ export function Header({
           <button
             onClick={toggle}
             aria-label={`Switch to ${nextTheme} mode`}
-            title={`Switch to ${nextTheme} mode`}
+            title={`Switch to ${nextTheme} mode (press d)`}
             className={iconBtn}
           >
             {theme === 'dark' ? (

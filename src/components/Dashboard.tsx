@@ -12,7 +12,7 @@ import { WhispersPanel } from './panels/WhispersPanel';
 import { CleaningPanel } from './panels/CleaningPanel';
 import { DataTablePanel, type DataTableHandle } from './panels/DataTablePanel';
 import { ExportBar } from './ExportBar';
-import { cn } from '@/lib/utils';
+import { cn, countNoun } from '@/lib/utils';
 
 const TABS = ['Overview', 'Columns', 'Charts', 'Whispers', 'Clean', 'Data'] as const;
 type Tab = (typeof TABS)[number];
@@ -58,11 +58,11 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
         <div>
           <h2 className="font-mono text-lg font-semibold tracking-tightish">{raw.fileName}</h2>
           <p className="tabular text-sm text-muted">
-            {dataset.overview.rows.toLocaleString()} rows · {dataset.overview.columns} columns
+            {countNoun(dataset.overview.rows, 'row')} · {countNoun(dataset.overview.columns, 'column')}
             {raw.skippedRows > 0 && (
               <span className="ml-2 inline-flex items-center gap-1 text-warning-text">
                 <TriangleAlert size={14} aria-hidden="true" />
-                {raw.skippedRows} malformed rows skipped
+                {countNoun(raw.skippedRows, 'malformed row')} skipped
               </span>
             )}
           </p>
@@ -99,7 +99,13 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
       </div>
 
       <div role="tabpanel">
-        {tab === 'Overview' && <OverviewPanel dataset={dataset} />}
+        {tab === 'Overview' && (
+          <OverviewPanel
+            dataset={dataset}
+            insights={insights}
+            onViewWhispers={() => setTab('Whispers')}
+          />
+        )}
         {tab === 'Columns' && (
           <ColumnsPanel dataset={dataset} onOverride={onOverride} highlightColumn={highlightColumn} />
         )}

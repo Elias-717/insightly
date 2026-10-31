@@ -11,6 +11,7 @@ const description =
   'A privacy-first, browser-only data profiling tool. Drop a CSV and instantly see column types, a data quality score, statistics, charts, and plain-English insights. Your data never leaves your device.';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://insightlet.vercel.app'),
   title,
   description,
   applicationName: 'Insightlet',

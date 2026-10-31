@@ -106,7 +106,7 @@ export function parseDate(raw: string | null): number | null {
   // Slash or dash separated: DD/MM/YYYY or MM/DD/YYYY
   const slash = /^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/.exec(s);
   if (slash) {
-    let [, a, b, y] = slash;
+    const [, a, b, y] = slash;
     let year = Number(y);
     if (year < 100) year += year < 70 ? 2000 : 1900;
     const na = Number(a);

@@ -31,7 +31,7 @@ function bucketKey(ts: number, g: Granularity): string {
 export function TimeSeries({ dataset }: { dataset: Dataset }) {
   const dateCols = dataset.columns.filter((c) => c.type === 'date');
   const numericCols = dataset.columns.filter((c) => c.type === 'number' || c.type === 'integer');
-  const [dateCol, setDateCol] = useState(dateCols[0]?.name ?? '');
+  const [dateCol] = useState(dateCols[0]?.name ?? '');
   const [numCol, setNumCol] = useState(numericCols[0]?.name ?? '');
   const [granularity, setGranularity] = useState<Granularity>('month');
   const [aggregation, setAggregation] = useState<Aggregation>('sum');

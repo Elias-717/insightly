@@ -1,6 +1,7 @@
 /// <reference lib="webworker" />
 import Papa from 'papaparse';
 import { detectDelimiter } from '@/lib/analysis/delimiter';
+import { stripBom } from '@/lib/analysis/clean-value';
 import type { CellValue, Delimiter, RawDataset } from '@/types';
 
 export interface ParseRequest {
@@ -34,7 +35,8 @@ ctx.addEventListener('message', (event: MessageEvent<ParseRequest>) => {
   if (data.type !== 'parse') return;
 
   try {
-    const sample = data.text.slice(0, 8192);
+    const text = stripBom(data.text);
+    const sample = text.slice(0, 8192);
     const delimiter = detectDelimiter(sample) as Delimiter;
 
     const headers: string[] = [];
@@ -43,7 +45,7 @@ ctx.addEventListener('message', (event: MessageEvent<ParseRequest>) => {
     let expectedCols = 0;
     let rowCount = 0;
 
-    Papa.parse<string[]>(data.text, {
+    Papa.parse<string[]>(text, {
       delimiter,
       skipEmptyLines: 'greedy',
       step: (result) => {

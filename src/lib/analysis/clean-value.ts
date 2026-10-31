@@ -5,6 +5,11 @@
 
 const MISSING_TOKENS = new Set(['', 'na', 'n/a', 'null', 'nan', 'none', '-', 'undefined']);
 
+/** Strip a leading UTF-8 byte-order mark (U+FEFF) if present. */
+export function stripBom(text: string): string {
+  return text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
+}
+
 /** Returns true when a raw cell should be treated as a missing value. */
 export function isMissing(value: string | null | undefined): boolean {
   if (value === null || value === undefined) return true;

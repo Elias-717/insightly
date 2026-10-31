@@ -63,14 +63,27 @@ export function standardizeCasing(
   };
 }
 
+/**
+ * Neutralize CSV formula injection: a cell beginning with =, +, -, or @ can be
+ * interpreted as a formula by spreadsheet software. Prefixing a single quote
+ * makes the cell render as literal text instead of executing.
+ */
+function neutralizeFormula(value: string): string {
+  if (/^[=+\-@]/.test(value)) {
+    return `'${value}`;
+  }
+  return value;
+}
+
 /** Serialize a RawDataset back to CSV text. */
 export function toCsv(raw: RawDataset, delimiter = ','): string {
   const escape = (value: CellValue): string => {
     if (value === null) return '';
-    if (value.includes(delimiter) || value.includes('"') || value.includes('\n')) {
-      return `"${value.replace(/"/g, '""')}"`;
+    const safe = neutralizeFormula(value);
+    if (safe.includes(delimiter) || safe.includes('"') || safe.includes('\n')) {
+      return `"${safe.replace(/"/g, '""')}"`;
     }
-    return value;
+    return safe;
   };
   const lines = [raw.headers.map((h) => escape(h)).join(delimiter)];
   for (const row of raw.rows) {

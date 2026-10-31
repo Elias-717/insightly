@@ -9,6 +9,7 @@
 [![CI](https://github.com/your-org/insightlet/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/insightlet/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-14B8A6.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-7C3AED.svg)](tsconfig.json)
+[![Coverage](https://img.shields.io/badge/coverage-95.8%25-14B8A6.svg)](TEST_REPORT.md)
 
 </div>
 
@@ -87,11 +88,28 @@ npm run dev
 ## Testing
 
 ```bash
-npm run test           # 70 tests
-npm run test:coverage  # coverage report
+npm test                 # 163 unit, edge, property, and component tests
+npm run test:coverage    # coverage report (thresholds enforced)
+npm run test:perf        # 50k x 30 performance smoke test
+npm run test:e2e:install # one-time: download the Playwright browser
+npm run test:e2e         # end-to-end + accessibility, desktop + mobile
 ```
 
-The suite has **70 tests** (67 unit + component tests, well above the 25 + 3 target) covering delimiter and type detection, number/date/boolean parsing, all descriptive statistics, outliers, Pearson correlation, duplicates, missing-value handling, the quality score, every insight rule, the cleaning actions, and three component tests (upload zone errors, quality gauge render, whispers panel). The core analysis engine (`src/lib/analysis`) sits at **~91% statement coverage**. Export modules are browser/DOM-bound and excluded from coverage thresholds.
+The suite has **163 unit + component tests** plus **12 Playwright E2E/accessibility
+tests** across desktop and a 375px mobile viewport. Coverage of the pure logic in
+`src/lib` is **95.8% statements / 100% functions**, with enforced thresholds of 90%
+for `src/lib/analysis` and `src/lib/insights` and 70% overall.
+
+Coverage spans delimiter and type detection, all descriptive statistics, outliers,
+Pearson correlation, duplicates, missing values, the quality score and its
+components, every insight rule (one file per rule, triggering and non-triggering
+cases), all cleaning actions, and the CSV/Markdown/HTML exports (including CSV
+formula-injection protection). Edge cases, property-based invariants (fast-check),
+and a 50k × 30 performance smoke test round it out.
+
+See [TEST_REPORT.md](TEST_REPORT.md) for the full breakdown, performance numbers,
+and the two bugs the tests surfaced and fixed (CSV formula injection and BOM
+handling).
 
 ## Folder structure
 

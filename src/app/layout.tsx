@@ -17,7 +17,7 @@ const description =
   'Column types, a data quality score, outliers, correlations, and plain-English insights. No upload, no account.';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://insightly.vercel.app'),
+  metadataBase: new URL('https://tryinsightly.vercel.app'),
   title,
   description,
   applicationName: 'Insightly',

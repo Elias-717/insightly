@@ -11,6 +11,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-2563EB.svg)](tsconfig.json)
 [![Coverage](https://img.shields.io/badge/coverage-95.8%25-2563EB.svg)](TEST_REPORT.md)
 
+**[→ Live demo: tryinsightly.vercel.app](https://tryinsightly.vercel.app/)**
+
 </div>
 
 Insightly is a privacy-first, browser-only data profiling tool. Drop in a CSV and instantly see column types, a data quality score, per-column statistics, auto-generated charts, a correlation heatmap, and plain-English "Whispers" insights. **Files never leave your browser** — all parsing and analysis run locally in a Web Worker.
@@ -159,7 +161,7 @@ These were decided during the build to keep everything local, fast, and portfoli
 - **One calm accent, token-driven theming.** A single blue accent (`#2563EB` light, `#3B82F6` dark) is used only for primary actions, links, focus rings, and active tabs; semantic colors (green/amber/orange/red/blue) are reserved for meaning and always paired with a Lucide icon and a text label. All colors are CSS-variable design tokens (with darker `-text` variants where needed) checked for WCAG AA contrast in light and dark mode. The data quality ring is colored by grade, and overview cards shift to warning/error tones past 10%/25% thresholds.
 - **Monospace for data.** Column names and raw table/stat values use JetBrains Mono with `tabular-nums` so figures align; UI text uses Inter. Both are self-hosted via `next/font`.
 - **Flat surfaces, hairline borders.** 1px borders and a single card radius replace heavy shadows; a subtle shadow is used only on popovers and dialogs. Animations are kept under 200ms and disabled under `prefers-reduced-motion`.
-- **`metadataBase`** points at a placeholder Vercel URL so Open Graph images resolve; change it to your deployed domain.
+- **`metadataBase`** points at `https://tryinsightly.vercel.app` so Open Graph images resolve correctly.
 
 ## Screenshots
 

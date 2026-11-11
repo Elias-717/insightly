@@ -109,6 +109,8 @@ applicable, automated tests.
 | FR-10.2 | Responsive down to 360px; table scrolls horizontally on mobile. | Done |
 | FR-10.3 | Empty state, loading skeletons, result animations, toasts. | Done |
 | FR-10.4 | Tabs: Overview, Columns, Charts, Whispers, Clean, Data. | Done |
+| FR-10.5 | Landing page shows an example report for the bundled messy sample that matches the real analysis (enforced by a test). | Done |
+| FR-10.6 | A file can be dropped anywhere on the landing page. | Done |
 | FR-10.5 | Keyboard shortcuts: `/` search, `d` dark mode, `?` shortcuts dialog. | Done |
 | FR-10.6 | Friendly, specific error messages for every failure mode. | Done |
 | FR-10.7 | Global error boundary with a friendly fallback. | Done |

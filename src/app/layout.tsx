@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Hanken_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { ToastProvider } from '@/components/providers/ToastProvider';
 
 // Self-hosted via next/font — no external font requests at runtime.
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+// Text: Hanken Grotesk. Data (values, file and column names, tables): JetBrains Mono.
+const sans = Hanken_Grotesk({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 const mono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
@@ -81,7 +82,7 @@ const csp = [
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${mono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${mono.variable}`}>
       <head>
         <meta httpEquiv="Content-Security-Policy" content={csp} />
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />

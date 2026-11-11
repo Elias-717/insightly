@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import { UploadCloud, Loader2, CircleAlert, Table2 } from 'lucide-react';
+import { Upload, Loader2, CircleAlert } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SAMPLE_DATASETS } from '@/data/samples';
 import type { ParserState } from '@/hooks/useCsvParser';
@@ -38,6 +38,21 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
 
   return (
     <div className="w-full text-left">
+      {/* Kept outside the role="button" drop area: interactive elements must not
+          nest, and the drop area already handles keyboard activation. */}
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".csv,.tsv,.txt,text/csv"
+        aria-label="Choose a CSV or TSV file"
+        tabIndex={-1}
+        className="sr-only"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) onFile(file);
+          e.target.value = '';
+        }}
+      />
       <div
         role="button"
         tabIndex={0}
@@ -56,27 +71,16 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
         onDragLeave={() => setDragging(false)}
         onDrop={handleDrop}
         className={cn(
-          'flex flex-col items-center justify-center rounded-card border border-dashed p-8 text-center transition-colors',
+          'group cursor-pointer rounded-card border-2 border-dashed p-5 transition-colors',
           dragging
             ? 'border-accent bg-accent-soft'
-            : 'border-border bg-surface hover:border-accent hover:bg-accent-soft/50',
+            : 'border-border bg-bg hover:border-accent',
           isParsing && 'pointer-events-none opacity-80',
         )}
       >
-        <input
-          ref={inputRef}
-          type="file"
-          accept=".csv,.tsv,.txt,text/csv"
-          className="sr-only"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) onFile(file);
-            e.target.value = '';
-          }}
-        />
 
         {isParsing ? (
-          <div className="flex flex-col items-center gap-3" aria-live="polite">
+          <div className="flex flex-col items-center gap-3 text-center" aria-live="polite">
             <Loader2 size={28} className="animate-spin text-accent" aria-hidden="true" />
             <p className="text-sm font-medium">
               Parsing… {state.progressRows > 0 && `${state.progressRows.toLocaleString()} rows`}
@@ -92,13 +96,18 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
             </button>
           </div>
         ) : (
-          <>
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-control bg-surface-2 text-muted">
-              <UploadCloud size={22} aria-hidden="true" />
-            </div>
-            <p className="text-base font-medium">Drop your CSV here</p>
-            <p className="mt-1 text-sm text-muted">or click to browse · .csv / .tsv · up to 20 MB</p>
-          </>
+          <div>
+            <p className="text-[15px] font-semibold text-fg">
+              {dragging ? 'Release to analyze' : 'Drop a .csv or .tsv file'}
+            </p>
+            <p className="mt-0.5 text-[13px] text-muted">
+              Anywhere on this page works. Up to 20 MB.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-2 rounded-control bg-accent px-3.5 py-2 text-sm font-semibold text-accent-fg transition-colors group-hover:bg-accent-hover">
+              <Upload size={15} aria-hidden="true" />
+              Choose file
+            </span>
+          </div>
         )}
       </div>
 
@@ -115,31 +124,30 @@ export function UploadZone({ state, onFile, onSample, onCancel }: UploadZoneProp
         </div>
       )}
 
-      <div className="mt-6">
-        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
-          Try a sample dataset
-        </p>
-        <div className="grid gap-2 sm:grid-cols-3">
+      <div className="mt-7">
+        <p className="text-[13px] text-muted">Or open a sample</p>
+        <ul className="mt-1.5 divide-y divide-border border-y border-border">
           {SAMPLE_DATASETS.map((s) => {
             const { rows, cols } = dimensions(s.csv);
             return (
-              <button
-                key={s.id}
-                onClick={() => onSample(s.id)}
-                disabled={isParsing}
-                className="group flex flex-col gap-1 rounded-card border border-border bg-surface p-3 text-left transition-colors hover:border-accent disabled:opacity-50"
-              >
-                <span className="flex items-center gap-2 text-sm font-medium">
-                  <Table2 size={16} className="text-muted group-hover:text-accent" aria-hidden="true" />
-                  {s.name}
-                </span>
-                <span className="tabular text-xs text-muted">
-                  {rows} rows × {cols} cols · {s.description}
-                </span>
-              </button>
+              <li key={s.id}>
+                <button
+                  onClick={() => onSample(s.id)}
+                  disabled={isParsing}
+                  title={s.description}
+                  className="group flex w-full items-baseline gap-4 py-2.5 text-left disabled:opacity-50"
+                >
+                  <span className="min-w-0 flex-1 text-sm font-medium text-fg group-hover:text-accent">
+                    {s.name}
+                  </span>
+                  <span className="tabular shrink-0 font-mono text-xs text-muted">
+                    {rows}&thinsp;×&thinsp;{cols}
+                  </span>
+                </button>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </div>
   );

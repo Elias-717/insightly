@@ -19,7 +19,8 @@ Insightly is a privacy-first, browser-only data profiling tool. Drop in a CSV an
 
 ## Features
 
-- **Upload** — drag-and-drop or file picker, auto-detects delimiter (comma, semicolon, tab, pipe), accepts `.csv`/`.tsv`, up to 20 MB, with progress and cancel.
+- **Landing page** — an example report for the messy sample (score, typed columns, highlighted problem cells, top findings) next to the upload area; pointing at a finding highlights the cells it is about.
+- **Upload** — drag-and-drop anywhere on the page or file picker, auto-detects delimiter (comma, semicolon, tab, pipe), accepts `.csv`/`.tsv`, up to 20 MB, with progress and cancel.
 - **Sample data** — three built-in datasets (student grades, e-commerce sales, messy customers).
 - **Type detection** — number, integer, text, category, boolean, date, identifier — with manual per-column override.
 - **Overview** — a one-line health headline, key figures (rows, columns, missing cells, duplicate rows), the top four findings inline with column sparklines, and columns per type.
@@ -100,14 +101,14 @@ npm run dev
 ## Testing
 
 ```bash
-npm test                 # 190 unit, edge, property, and component tests
+npm test                 # 198 unit, edge, property, and component tests
 npm run test:coverage    # coverage report (thresholds enforced)
 npm run test:perf        # 50k x 30 performance smoke test
 npm run test:e2e:install # one-time: download the Playwright browser
 npm run test:e2e         # end-to-end + accessibility, desktop + mobile
 ```
 
-The suite has **190 unit + component tests** plus **12 Playwright E2E/accessibility
+The suite has **198 unit + component tests** plus **12 Playwright E2E/accessibility
 tests** across desktop and a 375px mobile viewport. Coverage of the pure logic in
 `src/lib` is **95.2% statements / 100% functions**, with enforced thresholds of 90%
 for `src/lib/analysis` and `src/lib/insights` and 70% overall.

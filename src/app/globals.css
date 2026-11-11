@@ -5,64 +5,75 @@
 /*
  * Design tokens. All colors are "R G B" triplets so Tailwind's
  * rgb(var(--token) / <alpha-value>) can apply opacity. Contrast was checked to
- * meet WCAG AA for text in both light and dark modes. Blue "data tool" theme.
+ * meet WCAG AA for text in both modes.
+ *
+ * Identity: "green-bar printout". Tabular data used to come off the printer on
+ * pale green banded paper; analysts marked problems with a highlighter. Paper,
+ * ledger-green ink, and one highlighter yellow (--mark) used only for marking
+ * problems in data.
  */
 :root {
-  --bg: 248 250 252; /* #F8FAFC */
-  --surface: 255 255 255; /* #FFFFFF */
-  --surface-2: 241 245 249; /* slate-100 */
-  --border: 226 232 240; /* #E2E8F0 */
-  --fg: 15 23 42; /* #0F172A text-primary */
-  --fg-secondary: 71 85 105; /* #475569 text-secondary */
-  --muted: 100 116 139; /* #64748B text-muted */
+  --bg: 244 246 243; /* #F4F6F3 paper */
+  --surface: 255 255 255;
+  --surface-2: 232 238 232; /* #E8EEE8 green-bar band */
+  --border: 211 220 212; /* #D3DCD4 */
+  --fg: 23 32 27; /* #17201B ink */
+  --fg-secondary: 62 74 67; /* #3E4A43 */
+  --muted: 89 102 94; /* #59665E (5.4:1 on paper) */
 
-  --accent: 37 99 235; /* #2563EB */
-  --accent-hover: 29 78 216; /* #1D4ED8 */
+  --accent: 11 107 76; /* #0B6B4C ledger green (6.6:1 on white) */
+  --accent-hover: 8 87 61; /* #08573D */
   --accent-fg: 255 255 255;
-  --accent-soft: 239 246 255; /* #EFF6FF */
+  --accent-soft: 220 239 229; /* #DCEFE5 */
 
-  --success: 22 163 74; /* #16A34A indicator/ring */
-  --success-text: 21 128 61; /* #15803D darker for AA text */
+  --mark: 255 225 77; /* #FFE14D highlighter */
+  --mark-fg: 23 32 27;
+
+  --success: 22 163 74;
+  --success-text: 21 128 61;
   --success-soft: 220 252 231;
-  --warning: 217 119 6; /* #D97706 indicator */
-  --warning-text: 180 83 9; /* #B45309 darker for AA text */
+  --warning: 217 119 6;
+  --warning-text: 180 83 9;
   --warning-soft: 254 243 199;
-  --danger: 220 38 38; /* #DC2626 indicator */
-  --danger-text: 185 28 28; /* #B91C1C darker for AA text */
+  --danger: 220 38 38;
+  --danger-text: 185 28 28;
   --danger-soft: 254 226 226;
-  --info: 14 165 233; /* #0EA5E9 brand hue (indicators) */
-  --info-text: 3 105 161; /* #0369A1 darker sky for AA text */
-  --info-soft: 224 242 254;
-  --orange: 194 65 12; /* #C2410C grade D (AA on light) */
+  --info: 14 116 144; /* #0E7490 teal-blue, distinct from the green accent */
+  --info-text: 14 116 144;
+  --info-soft: 224 242 246;
+  --orange: 194 65 12;
 }
 
 .dark {
-  --bg: 11 18 32; /* #0B1220 */
-  --surface: 17 27 46; /* #111B2E */
-  --surface-2: 30 42 68; /* #1E2A44 */
-  --border: 30 42 68; /* #1E2A44 */
-  --fg: 241 245 249; /* #F1F5F9 */
-  --fg-secondary: 203 213 225; /* #CBD5E1 */
-  --muted: 148 163 184; /* #94A3B8 */
+  --bg: 15 21 18; /* #0F1512 */
+  --surface: 21 29 25; /* #151D19 */
+  --surface-2: 28 39 33; /* #1C2721 */
+  --border: 38 51 44; /* #26332C */
+  --fg: 230 236 231; /* #E6ECE7 */
+  --fg-secondary: 185 197 189;
+  --muted: 140 155 146; /* #8C9B92 */
 
-  --accent: 59 130 246; /* #3B82F6 */
-  --accent-hover: 96 165 250; /* #60A5FA */
-  --accent-fg: 255 255 255;
-  --accent-soft: 23 37 84; /* #172554 */
+  --accent: 92 196 148; /* #5CC494 */
+  --accent-hover: 128 214 174;
+  --accent-fg: 8 22 15; /* dark text on the light-green accent */
+  --accent-soft: 21 48 33; /* #153021 */
 
-  --success: 74 222 128; /* #4ADE80 */
-  --success-text: 74 222 128; /* #4ADE80 reads fine on dark */
+  --mark: 222 196 58; /* #DEC43A muted highlighter for dark paper */
+  --mark-fg: 15 21 18;
+
+  --success: 74 222 128;
+  --success-text: 74 222 128;
   --success-soft: 5 46 22;
-  --warning: 251 191 36; /* #FBBF24 */
-  --warning-text: 251 191 36; /* reads fine on dark soft bg */
+  --warning: 251 191 36;
+  --warning-text: 251 191 36;
   --warning-soft: 69 46 6;
-  --danger: 248 113 113; /* #F87171 */
-  --danger-text: 248 113 113; /* reads fine on dark soft bg */
+  --danger: 248 113 113;
+  --danger-text: 248 113 113;
   --danger-soft: 69 10 10;
-  --info: 56 189 248; /* #38BDF8 */
-  --info-text: 56 189 248; /* #38BDF8 reads fine on dark soft bg */
-  --info-soft: 8 47 73;
-  --orange: 251 146 60; /* orange-400 for dark */
+  --info: 103 205 224;
+  --info-text: 103 205 224;
+  --info-soft: 9 44 52;
+  --orange: 251 146 60;
 }
 
 html {
@@ -79,6 +90,12 @@ body {
 table,
 .stat-value {
   font-variant-numeric: tabular-nums;
+}
+
+/* Headline numbers: tight, tabular, and never wrapping mid-figure. */
+.stat-value {
+  letter-spacing: -0.025em;
+  white-space: nowrap;
 }
 
 /* Visible focus ring using the accent color (WCAG keyboard nav). */
@@ -104,6 +121,7 @@ table,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }

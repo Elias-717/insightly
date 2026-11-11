@@ -77,11 +77,13 @@ analysis engine → insights → export/worker/data → UI components → dashbo
 
 ## Testing (current state)
 
-- **190** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
+- **198** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
   edge cases (`tests/edge`), property-based (`tests/property`, fast-check), and
   component (`tests/components`).
 - **12** Playwright tests (`tests/e2e`): an end-to-end flow and axe accessibility
-  scans, each on desktop and a 375px mobile viewport.
+  scans, each on desktop and a 375px mobile viewport. Known failure: the flow test
+  expects `score` in the grades sample to be numeric, but type detection labels
+  any all-unique integer column an `identifier` (see TEST_REPORT.md).
 - **1** performance smoke test (`tests/performance`, run via `npm run test:perf`):
   generates a 50k × 30 dataset in memory and asserts analysis < 5s.
 - Coverage of `src/lib` is ~95.2% statements / 100% functions, with enforced
@@ -123,6 +125,10 @@ Two minimal production fixes, both revealed by tests and documented in
 - **Windows coverage gotcha:** run `npm run test:coverage` from a path with an
   uppercase drive letter (`C:\...`). Launched from `c:\...` (as some editors do),
   v8 coverage fails to map files and reports ~48% with spurious threshold errors.
+- The landing page's example report is static data in `src/data/preview.ts`
+  (parsing only happens in the Worker). `tests/unit/preview.test.ts` re-runs the
+  real analysis on the messy sample and fails if the preview drifts, so update
+  both when the sample, the insight rules, or their wording change.
 - The Overview's quality verdict (`qualityVerdict`) takes the headline severity
   from `buildOverviewSummary` so the two can never contradict each other. Keep
   them wired together if you change either.

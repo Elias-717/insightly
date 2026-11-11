@@ -134,7 +134,7 @@ with no flaky tests.
 
 ## Changes since this report
 
-UI work on the Overview and Columns screens added 7 tests (suite now **190** passing):
+UI work on the Overview, Columns, and landing screens added 15 tests (suite now **198** passing):
 
 - `tests/components/Dashboard.test.tsx`: the Overview shows up to four top
   findings, and clicking one navigates to its column or chart.
@@ -153,3 +153,28 @@ map source files and reports ~48% with false threshold failures.
 Columns tab (`tests/components/ColumnsPanel.test.tsx`, +3): the first column's
 detail opens by default, a column highlighted from an insight opens its detail,
 and each column's type is shown once (the badge-styled override dropdown).
+
+Landing page (+8): `tests/unit/preview.test.ts` recomputes the messy sample's
+report with the real engine and checks every figure, column type, row, and
+finding shown in the static landing preview; `tests/components/SamplePreview.test.tsx`
+covers the finding-to-cell highlighting and the "open the full report" actions.
+
+### Playwright status
+
+Before this UI work, 9 of the 12 Playwright tests were failing (axe violations
+on the landing page and dashboard, plus the flow test). Fixed since:
+
+- File input had no accessible name and sat inside the `role="button"` drop area
+  (`label`, `nested-interactive`). It now has a label and lives outside it.
+- The landing table's horizontal scroll area was not keyboard-reachable
+  (`scrollable-region-focusable`). It is now a labelled, focusable region.
+- Dashboard contrast failures in dark mode, resolved by the new color tokens.
+
+Still failing (both viewports): the flow test's "open column → Numeric
+statistics" step. This is a real type-detection bug, not a test problem:
+`detectColumnType` labels any integer column whose values are all unique (and
+has more than 10 rows) an `identifier`, so `score` in the grades sample is
+profiled as an ID. Not fixed here because it changes analysis behavior.
+
+The keyboard-shortcut test and the mobile dashboard scan are timing-sensitive
+when the whole suite runs in parallel: both passed 16/16 when repeated alone.

@@ -20,8 +20,8 @@ export function Header({
     'inline-flex h-9 w-9 items-center justify-center rounded-control border border-border text-muted transition-colors hover:bg-surface-2 hover:text-fg';
 
   return (
-    <header className="no-print sticky top-0 z-30 border-b border-border bg-bg/85 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+    <header className="no-print sticky top-0 z-30 border-b border-border bg-surface/90 backdrop-blur">
+      <div className="flex items-center justify-between px-4 py-3 sm:px-6">
         <button
           onClick={onReset}
           className="flex items-center gap-2"
@@ -29,7 +29,7 @@ export function Header({
           disabled={!showReset}
         >
           <Logo size={26} className="text-fg" />
-          <span className="text-base font-semibold tracking-tightish">Insightly</span>
+          <span className="text-[15px] font-semibold tracking-[-0.01em]">Insightly</span>
         </button>
 
         <div className="flex items-center gap-2">

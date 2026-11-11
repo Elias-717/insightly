@@ -23,6 +23,9 @@ const config: Config = {
         'accent-hover': 'rgb(var(--accent-hover) / <alpha-value>)',
         'accent-fg': 'rgb(var(--accent-fg) / <alpha-value>)',
         'accent-soft': 'rgb(var(--accent-soft) / <alpha-value>)',
+        // Highlighter: only for marking problems in data.
+        mark: 'rgb(var(--mark) / <alpha-value>)',
+        'mark-fg': 'rgb(var(--mark-fg) / <alpha-value>)',
         // Semantic colors (meaning only, always paired with icon + label).
         success: 'rgb(var(--success) / <alpha-value>)',
         'success-text': 'rgb(var(--success-text) / <alpha-value>)',
@@ -42,13 +45,13 @@ const config: Config = {
         'discovery-soft': 'rgb(var(--success-soft) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         // One radius for controls, one for cards.
-        control: '8px',
-        card: '12px',
+        control: '6px',
+        card: '8px',
       },
       spacing: {
         // Restrict to the 4/8/12/16/24/32/48 scale via named tokens.

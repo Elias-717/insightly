@@ -19,8 +19,9 @@ test.describe('Insightly end-to-end flow', () => {
       await expect(page.getByRole('tab', { name: new RegExp(tab) })).toBeVisible();
     }
 
-    // Overview shows the quality gauge.
-    await expect(page.getByText('Data quality')).toBeVisible();
+    // Overview shows the quality gauge. Match the heading: findings shown on the
+    // Overview can also contain the words "data quality".
+    await expect(page.getByRole('heading', { name: 'Data quality' })).toBeVisible();
 
     // Columns tab -> open a column detail.
     await page.getByRole('tab', { name: /Columns/ }).click();

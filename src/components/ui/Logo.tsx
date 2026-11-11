@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-/** Insightly logo: a 3x3 grid where one cell is filled with the accent color. */
+/** Insightly logo: a 3x3 grid of cells with one highlighted, like a marked spreadsheet cell. */
 export function Logo({ className, size = 32 }: { className?: string; size?: number }) {
   return (
     <svg
@@ -24,8 +24,10 @@ export function Logo({ className, size = 32 }: { className?: string; size?: numb
               width={8}
               height={8}
               rx={2}
-              className={accentCell ? 'fill-accent' : 'fill-current'}
-              opacity={accentCell ? 1 : 0.3}
+              className={accentCell ? 'fill-mark' : 'fill-current'}
+              opacity={accentCell ? 1 : 0.28}
+              stroke={accentCell ? 'currentColor' : undefined}
+              strokeWidth={accentCell ? 1.25 : undefined}
             />
           );
         }),

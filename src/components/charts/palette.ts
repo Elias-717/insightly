@@ -1,5 +1,5 @@
 /**
- * Chart color tokens for the blue "data tool" theme.
+ * Chart color tokens for the green-bar theme.
  *
  * Recharts needs concrete color strings (it cannot consume CSS variables in
  * `fill`/`stroke`), so we resolve the accent from the CSS variable at runtime
@@ -7,7 +7,7 @@
  * single accent in one place (globals.css) while still feeding Recharts a hex.
  */
 
-const ACCENT_FALLBACK = '#2563EB'; // --accent light mode (#2563EB)
+const ACCENT_FALLBACK = '#0B6B4C'; // --accent light mode (ledger green)
 
 /** Read a CSS variable "R G B" triplet as a hex-ish rgb() string, with fallback. */
 export function cssVar(name: string, fallback: string): string {
@@ -25,14 +25,14 @@ export function chartAccent(): string {
 /** Static single-series accent for places that render before hydration. */
 export const CHART_ACCENT = ACCENT_FALLBACK;
 
-export const CHART_GRID = 'rgb(148 163 184 / 0.25)';
-export const CHART_MUTED = 'rgb(100 116 139)';
+export const CHART_GRID = 'rgb(140 155 146 / 0.25)';
+export const CHART_MUTED = 'rgb(89 102 94)';
 
 /** Color-blind-safe categorical palette (at most 7 series). */
 export const CHART_SERIES = [
-  '#2563EB', // blue (accent)
-  '#0EA5E9', // sky
-  '#16A34A', // green
+  '#0B6B4C', // ledger green (accent)
+  '#2563EB', // blue
+  '#0E7490', // teal-blue
   '#D97706', // amber
   '#7C3AED', // violet
   '#DB2777', // pink

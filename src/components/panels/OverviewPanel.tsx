@@ -79,7 +79,7 @@ function HealthBand({ dataset, insights }: { dataset: Dataset; insights: Insight
           <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
             Data quality
           </h3>
-          <QualityGauge quality={quality} dataset={dataset} />
+          <QualityGauge quality={quality} dataset={dataset} severity={summary.severity} />
         </div>
 
         <div className="flex min-w-0 flex-col justify-center p-6">

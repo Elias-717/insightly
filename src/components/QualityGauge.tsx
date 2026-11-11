@@ -3,7 +3,11 @@
 import { useState } from 'react';
 import { Info, Minus } from 'lucide-react';
 import type { Dataset, QualityComponent, QualityScore } from '@/types';
-import { qualityVerdict, topQualityReasons } from '@/lib/overview/summary';
+import {
+  qualityVerdict,
+  topQualityReasons,
+  type SummarySeverity,
+} from '@/lib/overview/summary';
 
 /** Ring stroke color (indicator) by grade: A/B good, C warning, D orange, F error. */
 function gradeRing(grade: string): string {
@@ -43,7 +47,16 @@ const REASON_LABEL: Record<QualityComponent['key'], string> = {
 };
 
 /** Grade-colored ring showing the data quality score, verdict, and top reasons. */
-export function QualityGauge({ quality, dataset }: { quality: QualityScore; dataset?: Dataset }) {
+export function QualityGauge({
+  quality,
+  dataset,
+  severity,
+}: {
+  quality: QualityScore;
+  dataset?: Dataset;
+  /** Headline severity, so the verdict agrees with the Overview summary. */
+  severity?: SummarySeverity;
+}) {
   const [open, setOpen] = useState(false);
   const radius = 52;
   const circumference = 2 * Math.PI * radius;
@@ -81,7 +94,7 @@ export function QualityGauge({ quality, dataset }: { quality: QualityScore; data
       </div>
 
       {dataset && (
-        <p className="mt-2 text-center text-sm text-fg-secondary">{qualityVerdict(score)}</p>
+        <p className="mt-2 text-center text-sm text-fg-secondary">{qualityVerdict(score, severity)}</p>
       )}
 
       {reasons.length > 0 && (

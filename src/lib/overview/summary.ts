@@ -126,8 +126,17 @@ export function topQualityReasons(dataset: Dataset, limit = 3): QualityReason[] 
     .slice(0, limit);
 }
 
-/** One-line verdict for the data quality card. */
-export function qualityVerdict(score: number): string {
+/**
+ * One-line verdict for the data quality card.
+ *
+ * The score alone can be generous (e.g. 15% missing cells still scores ~92),
+ * while the Overview headline flags concrete problems. Passing the headline's
+ * severity caps the verdict so the two never contradict each other: a
+ * "warning" headline can't sit next to "Excellent — ready to analyze".
+ */
+export function qualityVerdict(score: number, severity: SummarySeverity = 'success'): string {
+  if (severity === 'error' && score >= 60) return 'Needs work — clean before relying on it.';
+  if (severity === 'warning' && score >= 80) return 'Good overall — some cleanup recommended.';
   if (score >= 90) return 'Excellent — ready to analyze.';
   if (score >= 80) return 'Good — minor cleanup optional.';
   if (score >= 70) return 'Fair — some cleaning recommended.';

@@ -108,6 +108,22 @@ describe('qualityVerdict', () => {
     expect(qualityVerdict(62)).toMatch(/Needs work/);
     expect(qualityVerdict(40)).toMatch(/Poor/);
   });
+
+  it('caps the verdict by headline severity so they never contradict', () => {
+    expect(qualityVerdict(95, 'success')).toMatch(/Excellent/);
+    expect(qualityVerdict(95, 'warning')).toMatch(/some cleanup recommended/);
+    expect(qualityVerdict(85, 'warning')).toMatch(/some cleanup recommended/);
+    expect(qualityVerdict(72, 'warning')).toMatch(/Fair/);
+    expect(qualityVerdict(95, 'error')).toMatch(/Needs work/);
+    expect(qualityVerdict(40, 'error')).toMatch(/Poor/);
+  });
+
+  it('never pairs a non-success headline with an "Excellent" verdict', () => {
+    const d = messy();
+    const summary = buildOverviewSummary(d, runInsights(d));
+    expect(summary.severity).not.toBe('success');
+    expect(qualityVerdict(d.quality.score, summary.severity)).not.toMatch(/Excellent/);
+  });
 });
 
 describe('typeSummary and rowsSubline', () => {

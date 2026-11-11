@@ -134,7 +134,7 @@ with no flaky tests.
 
 ## Changes since this report
 
-UI work on the Overview, Columns, and landing screens added 15 tests (suite now **198** passing):
+UI work on the Overview, Columns, and landing screens, plus the identifier fix below, added 20 tests (suite now **203** passing):
 
 - `tests/components/Dashboard.test.tsx`: the Overview shows up to four top
   findings, and clicking one navigates to its column or chart.
@@ -143,7 +143,7 @@ UI work on the Overview, Columns, and landing screens added 15 tests (suite now 
   to a warning headline (previously a 92-scoring file with 15% missing cells
   showed both).
 
-Coverage of `src/lib` is now 95.19% statements / 89.82% branches / 100%
+Coverage of `src/lib` is now 96.34% statements / 90.63% branches / 100%
 functions; all thresholds pass.
 
 **Windows note:** run coverage from a path with an uppercase drive letter
@@ -170,15 +170,20 @@ on the landing page and dashboard, plus the flow test). Fixed since:
   (`scrollable-region-focusable`). It is now a labelled, focusable region.
 - Dashboard contrast failures in dark mode, resolved by the new color tokens.
 
-Still failing (both viewports): the flow test's "open column → Numeric
-statistics" step. This is a real type-detection bug, not a test problem:
-`detectColumnType` labels any integer column whose values are all unique (and
-has more than 10 rows) an `identifier`, so `score` in the grades sample is
-profiled as an ID. Not fixed here because it changes analysis behavior.
+Fixed: the flow test's "open column → Numeric statistics" step was failing on a
+real type-detection bug. `detectColumnType` labelled any integer column whose
+values were all unique (and had more than 10 rows) an `identifier`, so `score`
+in the grades sample was profiled as an ID. Integer columns now need an ID-like
+name or index-like values (consecutive, or strictly increasing) as well. Five
+tests cover it in `tests/detection.test.ts`, including the grades sample itself.
+With `score` numeric, the Charts tab shows more charts, so the flow test's
+"at least one chart heading" check now uses `.first()`.
+
+**All 12 Playwright tests pass** (36/36 with `--repeat-each=3`).
 
 The accessibility scans run with `reducedMotion: 'reduce'` so axe checks the
 settled page; mid-animation, fading text is partly transparent and would be
 reported as low contrast.
 
-The keyboard-shortcut test and the mobile dashboard scan are timing-sensitive
-when the whole suite runs in parallel: both passed 16/16 when repeated alone.
+The keyboard-shortcut test used to be flaky: it pressed `?` before hydration
+attached the listener. It now waits for the page to finish loading.

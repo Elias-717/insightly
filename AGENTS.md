@@ -77,16 +77,14 @@ analysis engine → insights → export/worker/data → UI components → dashbo
 
 ## Testing (current state)
 
-- **198** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
+- **203** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
   edge cases (`tests/edge`), property-based (`tests/property`, fast-check), and
   component (`tests/components`).
 - **12** Playwright tests (`tests/e2e`): an end-to-end flow and axe accessibility
-  scans, each on desktop and a 375px mobile viewport. Known failure: the flow test
-  expects `score` in the grades sample to be numeric, but type detection labels
-  any all-unique integer column an `identifier` (see TEST_REPORT.md).
+  scans, each on desktop and a 375px mobile viewport. All 12 pass.
 - **1** performance smoke test (`tests/performance`, run via `npm run test:perf`):
   generates a 50k × 30 dataset in memory and asserts analysis < 5s.
-- Coverage of `src/lib` is ~95.2% statements / 100% functions, with enforced
+- Coverage of `src/lib` is ~96.3% statements / 100% functions, with enforced
   thresholds (90% for analysis & insights, 70% overall) in `vitest.config.ts`.
 
 Commands:
@@ -125,6 +123,11 @@ Two minimal production fixes, both revealed by tests and documented in
 - **Windows coverage gotcha:** run `npm run test:coverage` from a path with an
   uppercase drive letter (`C:\...`). Launched from `c:\...` (as some editors do),
   v8 coverage fails to map files and reports ~48% with spurious threshold errors.
+- Integer identifiers: a mostly-unique integer column is only an `identifier`
+  if its name reads like one (`id`, `customer_id`, `userId`, `sku`, ...) or its
+  values run like an index (consecutive, or strictly increasing down the file).
+  Uniqueness alone is not enough; small files often have all-distinct scores.
+  `detectColumnType(values, name)` takes the column name for this.
 - The landing page's example report is static data in `src/data/preview.ts`
   (parsing only happens in the Worker). `tests/unit/preview.test.ts` re-runs the
   real analysis on the messy sample and fails if the preview drifts, so update

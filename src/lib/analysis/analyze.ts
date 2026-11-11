@@ -41,7 +41,7 @@ export function analyzeDataset(
 
   const columns = raw.headers.map((name, index) => {
     const values = columnValues(raw, index);
-    const detection = detectColumnType(values);
+    const detection = detectColumnType(values, name);
     const type = overrides[name] ?? detection.type;
     return profileColumn(name, index, values, type, detection.type);
   });

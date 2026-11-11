@@ -30,7 +30,9 @@ test.describe('Insightly end-to-end flow', () => {
 
     // Charts tab renders at least one chart heading.
     await page.getByRole('tab', { name: /Charts/ }).click();
-    await expect(page.getByText(/Distribution of|Correlation heatmap|Over time/)).toBeVisible();
+    await expect(
+      page.getByText(/Distribution of|Correlation heatmap|Over time/).first(),
+    ).toBeVisible();
 
     // Whispers tab shows insights.
     await page.getByRole('tab', { name: /Whispers/ }).click();
@@ -57,6 +59,8 @@ test.describe('Insightly end-to-end flow', () => {
 
   test('keyboard shortcut opens the shortcuts dialog', async ({ page }) => {
     await page.goto('/');
+    // The shortcut listener is attached on hydration; pressing earlier is a no-op.
+    await page.waitForLoadState('networkidle');
     await page.keyboard.press('?');
     await expect(page.getByRole('dialog', { name: /Keyboard shortcuts/i })).toBeVisible();
   });

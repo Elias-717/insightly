@@ -22,7 +22,7 @@ Insightly is a privacy-first, browser-only data profiling tool. Drop in a CSV an
 - **Landing page** — an example report for the messy sample (score, typed columns, highlighted problem cells, top findings) next to the upload area; pointing at a finding highlights the cells it is about.
 - **Upload** — drag-and-drop anywhere on the page or file picker, auto-detects delimiter (comma, semicolon, tab, pipe), accepts `.csv`/`.tsv`, up to 20 MB, with progress and cancel.
 - **Sample data** — three built-in datasets (student grades, e-commerce sales, messy customers).
-- **Type detection** — number, integer, text, category, boolean, date, identifier — with manual per-column override.
+- **Type detection** — number, integer, text, category, boolean, date, identifier — with manual per-column override. Integer columns count as identifiers only when named like one or when their values run like an index, so unique scores and prices stay numeric.
 - **Overview** — a one-line health headline, key figures (rows, columns, missing cells, duplicate rows), the top four findings inline with column sparklines, and columns per type.
 - **Data quality score (0–100)** — a transparent gauge with a letter grade and a "How is this calculated?" breakdown.
 - **Per-column profiles** — full numeric stats (mean, median, mode, std, variance, quartiles, IQR, skewness, outliers, zeros, negatives), category top values, date ranges, and text metrics.
@@ -102,19 +102,16 @@ npm run dev
 ## Testing
 
 ```bash
-npm test                 # 198 unit, edge, property, and component tests
+npm test                 # 203 unit, edge, property, and component tests
 npm run test:coverage    # coverage report (thresholds enforced)
 npm run test:perf        # 50k x 30 performance smoke test
 npm run test:e2e:install # one-time: download the Playwright browser
 npm run test:e2e         # end-to-end + accessibility, desktop + mobile
 ```
 
-The suite has **198 unit + component tests** plus **12 Playwright E2E/accessibility
-tests** across desktop and a 375px mobile viewport. 10 of the 12 Playwright tests
-pass; the end-to-end flow test is blocked by a known type-detection bug (an
-all-unique integer column such as `score` is labelled an identifier), described in
-[`TEST_REPORT.md`](TEST_REPORT.md). Coverage of the pure logic in
-`src/lib` is **95.2% statements / 100% functions**, with enforced thresholds of 90%
+The suite has **203 unit + component tests** plus **12 Playwright E2E/accessibility
+tests** across desktop and a 375px mobile viewport, all passing. Coverage of the pure logic in
+`src/lib` is **96.3% statements / 100% functions**, with enforced thresholds of 90%
 for `src/lib/analysis` and `src/lib/insights` and 70% overall.
 
 Coverage spans delimiter and type detection, all descriptive statistics, outliers,

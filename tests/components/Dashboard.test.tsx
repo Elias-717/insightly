@@ -59,6 +59,25 @@ describe('Dashboard (sample data loaded)', () => {
     expect(screen.getByText('Data quality')).toBeInTheDocument();
   });
 
+  it('surfaces the top findings directly on the Overview', () => {
+    renderDashboard();
+    const heading = screen.getByRole('heading', { name: 'Top findings' });
+    const list = heading.closest('section')!.querySelector('ol')!;
+    const items = list.querySelectorAll('li');
+    expect(items.length).toBeGreaterThan(0);
+    expect(items.length).toBeLessThanOrEqual(4);
+  });
+
+  it('opens the Columns tab when a column finding is clicked', async () => {
+    renderDashboard();
+    const heading = screen.getByRole('heading', { name: 'Top findings' });
+    const buttons = heading.closest('section')!.querySelectorAll('ol button');
+    await userEvent.click(buttons[0] as HTMLElement);
+    expect(
+      screen.getByRole('tab', { name: /Columns|Charts/, selected: true }),
+    ).toBeInTheDocument();
+  });
+
   it('switches to the Columns tab and lists columns', async () => {
     renderDashboard();
     await userEvent.click(screen.getByRole('tab', { name: /Columns/ }));

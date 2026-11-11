@@ -104,6 +104,7 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
             dataset={dataset}
             insights={insights}
             onViewWhispers={() => setTab('Whispers')}
+            onSelectInsight={onSelectInsight}
           />
         )}
         {tab === 'Columns' && (

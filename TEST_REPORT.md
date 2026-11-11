@@ -134,7 +134,7 @@ with no flaky tests.
 
 ## Changes since this report
 
-UI work on the Overview screen added 4 tests (suite now **187** passing):
+UI work on the Overview and Columns screens added 7 tests (suite now **190** passing):
 
 - `tests/components/Dashboard.test.tsx`: the Overview shows up to four top
   findings, and clicking one navigates to its column or chart.
@@ -149,3 +149,7 @@ functions; all thresholds pass.
 **Windows note:** run coverage from a path with an uppercase drive letter
 (`C:\...`). From a lowercase `c:\...` working directory, v8 coverage fails to
 map source files and reports ~48% with false threshold failures.
+
+Columns tab (`tests/components/ColumnsPanel.test.tsx`, +3): the first column's
+detail opens by default, a column highlighted from an insight opens its detail,
+and each column's type is shown once (the badge-styled override dropdown).

@@ -77,7 +77,7 @@ analysis engine → insights → export/worker/data → UI components → dashbo
 
 ## Testing (current state)
 
-- **187** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
+- **190** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
   edge cases (`tests/edge`), property-based (`tests/property`, fast-check), and
   component (`tests/components`).
 - **12** Playwright tests (`tests/e2e`): an end-to-end flow and axe accessibility

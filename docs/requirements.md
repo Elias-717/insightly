@@ -49,6 +49,7 @@ applicable, automated tests.
 | FR-4.3 | Date: earliest, latest, span, most common weekday and month. | Done |
 | FR-4.4 | Text: average length, longest, shortest, empty-string count. | Done |
 | FR-4.5 | Every column: missing %, unique count, and a mini sparkline. | Done |
+| FR-4.6 | The Columns tab always shows a column detail (first column by default; the insight's column when arriving from an insight). | Done |
 
 ## 5. Charts
 

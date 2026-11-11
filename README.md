@@ -100,14 +100,14 @@ npm run dev
 ## Testing
 
 ```bash
-npm test                 # 187 unit, edge, property, and component tests
+npm test                 # 190 unit, edge, property, and component tests
 npm run test:coverage    # coverage report (thresholds enforced)
 npm run test:perf        # 50k x 30 performance smoke test
 npm run test:e2e:install # one-time: download the Playwright browser
 npm run test:e2e         # end-to-end + accessibility, desktop + mobile
 ```
 
-The suite has **187 unit + component tests** plus **12 Playwright E2E/accessibility
+The suite has **190 unit + component tests** plus **12 Playwright E2E/accessibility
 tests** across desktop and a 375px mobile viewport. Coverage of the pure logic in
 `src/lib` is **95.2% statements / 100% functions**, with enforced thresholds of 90%
 for `src/lib/analysis` and `src/lib/insights` and 70% overall.

@@ -32,6 +32,30 @@ describe('ColumnsPanel type override', () => {
     expect(scoreSelect.value).toBe('text');
   });
 
+  it('shows the first column detail by default', () => {
+    render(<ColumnsPanel dataset={dataset} onOverride={vi.fn()} />);
+    expect(screen.getByLabelText('Open details for id')).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('heading', { name: 'id' })).toBeInTheDocument();
+  });
+
+  it('opens the detail of a column highlighted from an insight', () => {
+    render(<ColumnsPanel dataset={dataset} onOverride={vi.fn()} highlightColumn="city" />);
+    expect(screen.getByLabelText('Open details for city')).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByText('Top values')).toBeInTheDocument();
+  });
+
+  it('shows each column type once (no duplicate badge next to the dropdown)', () => {
+    render(<ColumnsPanel dataset={dataset} onOverride={vi.fn()} />);
+    const row = document.getElementById('column-score')!;
+    const type = dataset.columns.find((c) => c.name === 'score')!.type;
+    // The dropdown is the only place the type appears; no separate badge text.
+    const outsideSelect = within(row)
+      .queryAllByText(type)
+      .filter((el) => el.tagName !== 'OPTION');
+    expect(outsideSelect).toHaveLength(0);
+    expect((within(row).getByRole('combobox') as HTMLSelectElement).value).toBe(type);
+  });
+
   it('opens a column detail when a column is clicked', async () => {
     render(<ColumnsPanel dataset={dataset} onOverride={vi.fn()} />);
     await userEvent.click(screen.getByLabelText('Open details for city'));

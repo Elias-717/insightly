@@ -37,6 +37,8 @@ applicable, automated tests.
 | FR-3.2 | Compute a transparent 0–100 quality score from completeness, uniqueness, consistency, and outliers. | Done |
 | FR-3.3 | Display the score as a circular gauge with a letter grade. | Done |
 | FR-3.4 | Provide a "How is this calculated?" breakdown of each component and weight. | Done |
+| FR-3.5 | Show the top-ranked insights (up to 4) directly on the Overview, each linking to its column or chart, with a link to the full list. | Done |
+| FR-3.6 | The quality verdict must never contradict the Overview headline (a warning/error headline caps the verdict). | Done |
 
 ## 4. Per-column profiles
 

@@ -77,14 +77,14 @@ analysis engine → insights → export/worker/data → UI components → dashbo
 
 ## Testing (current state)
 
-- **163** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
+- **187** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
   edge cases (`tests/edge`), property-based (`tests/property`, fast-check), and
   component (`tests/components`).
 - **12** Playwright tests (`tests/e2e`): an end-to-end flow and axe accessibility
   scans, each on desktop and a 375px mobile viewport.
 - **1** performance smoke test (`tests/performance`, run via `npm run test:perf`):
   generates a 50k × 30 dataset in memory and asserts analysis < 5s.
-- Coverage of `src/lib` is ~95.8% statements / 100% functions, with enforced
+- Coverage of `src/lib` is ~95.2% statements / 100% functions, with enforced
   thresholds (90% for analysis & insights, 70% overall) in `vitest.config.ts`.
 
 Commands:
@@ -120,6 +120,12 @@ Two minimal production fixes, both revealed by tests and documented in
   provide element dimensions.
 - Export modules (`csv.ts`, `pdf.ts`) are DOM/browser-bound and excluded from unit
   coverage; they are exercised by the Playwright flow instead.
+- **Windows coverage gotcha:** run `npm run test:coverage` from a path with an
+  uppercase drive letter (`C:\...`). Launched from `c:\...` (as some editors do),
+  v8 coverage fails to map files and reports ~48% with spurious threshold errors.
+- The Overview's quality verdict (`qualityVerdict`) takes the headline severity
+  from `buildOverviewSummary` so the two can never contradict each other. Keep
+  them wired together if you change either.
 - Conventional-commit messages (`feat:`, `fix:`, `test:`, `docs:`, `chore:`).
 
 ## Definition of done for a change

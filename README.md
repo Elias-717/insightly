@@ -22,7 +22,7 @@ Insightly is a privacy-first, browser-only data profiling tool. Drop in a CSV an
 - **Upload** — drag-and-drop or file picker, auto-detects delimiter (comma, semicolon, tab, pipe), accepts `.csv`/`.tsv`, up to 20 MB, with progress and cancel.
 - **Sample data** — three built-in datasets (student grades, e-commerce sales, messy customers).
 - **Type detection** — number, integer, text, category, boolean, date, identifier — with manual per-column override.
-- **Overview cards** — rows, columns, missing cells, duplicate rows, estimated size, and columns per type.
+- **Overview** — a one-line health headline, key figures (rows, columns, missing cells, duplicate rows), the top four findings inline with column sparklines, and columns per type.
 - **Data quality score (0–100)** — a transparent gauge with a letter grade and a "How is this calculated?" breakdown.
 - **Per-column profiles** — full numeric stats (mean, median, mode, std, variance, quartiles, IQR, skewness, outliers, zeros, negatives), category top values, date ranges, and text metrics.
 - **Charts** — histograms (adjustable bins), category bars (top 10 + Other), time series (day/week/month × sum/mean/count), scatter plot, Pearson correlation heatmap, and box-plot summaries. Every chart has a text summary and a Download PNG button.
@@ -100,16 +100,16 @@ npm run dev
 ## Testing
 
 ```bash
-npm test                 # 163 unit, edge, property, and component tests
+npm test                 # 187 unit, edge, property, and component tests
 npm run test:coverage    # coverage report (thresholds enforced)
 npm run test:perf        # 50k x 30 performance smoke test
 npm run test:e2e:install # one-time: download the Playwright browser
 npm run test:e2e         # end-to-end + accessibility, desktop + mobile
 ```
 
-The suite has **163 unit + component tests** plus **12 Playwright E2E/accessibility
+The suite has **187 unit + component tests** plus **12 Playwright E2E/accessibility
 tests** across desktop and a 375px mobile viewport. Coverage of the pure logic in
-`src/lib` is **95.8% statements / 100% functions**, with enforced thresholds of 90%
+`src/lib` is **95.2% statements / 100% functions**, with enforced thresholds of 90%
 for `src/lib/analysis` and `src/lib/insights` and 70% overall.
 
 Coverage spans delimiter and type detection, all descriptive statistics, outliers,

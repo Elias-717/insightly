@@ -124,10 +124,28 @@ Both were found by new tests and fixed with the smallest possible change.
 
 ## Flakiness
 
-The full Vitest suite was run three times consecutively: 163/163 passing each time
+The full Vitest suite was run three times consecutively: 163/163 passing each time (at the time of this report; the suite is now 187 tests, see below)
 with no flaky tests.
 
 ## Fixtures
 
 `tests/fixtures/`: `clean.csv`, `messy.csv`, `empty.csv`, `one-column.csv`,
 `semicolon.csv`, `bom.csv`, `unicode.csv`.
+
+## Changes since this report
+
+UI work on the Overview screen added 4 tests (suite now **187** passing):
+
+- `tests/components/Dashboard.test.tsx`: the Overview shows up to four top
+  findings, and clicking one navigates to its column or chart.
+- `tests/unit/overview-summary.test.ts`: `qualityVerdict` is capped by the
+  headline severity, and a messy dataset never gets an "Excellent" verdict next
+  to a warning headline (previously a 92-scoring file with 15% missing cells
+  showed both).
+
+Coverage of `src/lib` is now 95.19% statements / 89.82% branches / 100%
+functions; all thresholds pass.
+
+**Windows note:** run coverage from a path with an uppercase drive letter
+(`C:\...`). From a lowercase `c:\...` working directory, v8 coverage fails to
+map source files and reports ~48% with false threshold failures.

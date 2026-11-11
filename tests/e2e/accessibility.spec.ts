@@ -17,6 +17,10 @@ async function scan(page: import('@playwright/test').Page) {
 }
 
 test.describe('accessibility', () => {
+  // Scan the settled page. Mid-animation, fading text is partly transparent and
+  // axe reports it as low contrast; reduced motion renders the final state at once.
+  test.use({ reducedMotion: 'reduce' });
+
   test('landing page has no serious violations (light)', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { name: /Get the story/i })).toBeVisible();

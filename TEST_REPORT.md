@@ -176,5 +176,9 @@ statistics" step. This is a real type-detection bug, not a test problem:
 has more than 10 rows) an `identifier`, so `score` in the grades sample is
 profiled as an ID. Not fixed here because it changes analysis behavior.
 
+The accessibility scans run with `reducedMotion: 'reduce'` so axe checks the
+settled page; mid-animation, fading text is partly transparent and would be
+reported as low contrast.
+
 The keyboard-shortcut test and the mobile dashboard scan are timing-sensitive
 when the whole suite runs in parallel: both passed 16/16 when repeated alone.

@@ -162,13 +162,17 @@ function TopFindings({
         </div>
       ) : (
         <ol className="divide-y divide-border overflow-hidden rounded-card border border-border bg-surface">
-          {top.map((insight) => {
+          {top.map((insight, i) => {
             const column = insight.columnName
               ? dataset.columns.find((c) => c.name === insight.columnName)
               : undefined;
             const hasShape = column && column.sparkline.some((v) => v > 0);
             return (
-              <li key={insight.id}>
+              <li
+                key={insight.id}
+                className="anim-rise"
+                style={{ '--d': `${200 + i * 60}ms` } as React.CSSProperties}
+              >
                 <button
                   onClick={() => onSelectInsight(insight)}
                   className="group flex w-full items-center gap-4 p-4 text-left transition-colors hover:bg-surface-2/60"

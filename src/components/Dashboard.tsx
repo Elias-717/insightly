@@ -98,7 +98,8 @@ export function Dashboard({ raw, tableRef }: DashboardProps) {
         ))}
       </div>
 
-      <div role="tabpanel">
+      {/* Re-keyed per tab so each switch gets a short fade-in. */}
+      <div role="tabpanel" key={tab} className="animate-fade-in">
         {tab === 'Overview' && (
           <OverviewPanel
             dataset={dataset}

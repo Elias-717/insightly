@@ -70,20 +70,26 @@ export function Hero({ state, onFile, onSample, onCancel }: HeroProps) {
   return (
     <div className="lg:grid lg:min-h-[calc(100vh-61px)] lg:grid-cols-[23rem_minmax(0,1fr)]">
       <div className="flex flex-col border-b border-border bg-surface px-6 py-8 lg:border-b-0 lg:border-r">
-        <h1 className="text-[2rem] font-semibold leading-[1.08] tracking-[-0.03em] text-fg">
+        <h1 className="anim-rise text-[2rem] font-semibold leading-[1.08] tracking-[-0.03em] text-fg">
           Drop a CSV.
           <br />
           Get the story.
         </h1>
-        <p className="mt-3 text-[15px] leading-relaxed text-fg-secondary">
+        <p
+          className="anim-rise mt-3 text-[15px] leading-relaxed text-fg-secondary"
+          style={{ '--d': '50ms' } as React.CSSProperties}
+        >
           Column types, gaps, outliers, and odd spellings, in plain English.
         </p>
 
-        <div className="mt-6">
+        <div className="anim-rise mt-6" style={{ '--d': '100ms' } as React.CSSProperties}>
           <UploadZone state={state} onFile={onFile} onSample={onSample} onCancel={onCancel} />
         </div>
 
-        <div className="mt-8 space-y-3 text-[13px] leading-relaxed text-muted lg:mt-auto lg:pt-8">
+        <div
+          className="anim-rise mt-8 space-y-3 text-[13px] leading-relaxed text-muted lg:mt-auto lg:pt-8"
+          style={{ '--d': '200ms' } as React.CSSProperties}
+        >
           <p className="flex gap-2 text-fg-secondary">
             <Lock size={14} className="mt-[3px] shrink-0" aria-hidden="true" />
             Your file never leaves your device. Parsing and analysis run in this browser tab.
@@ -113,7 +119,7 @@ export function Hero({ state, onFile, onSample, onCancel }: HeroProps) {
 
       {dragging && (
         <div
-          className="pointer-events-none fixed inset-3 z-50 flex items-center justify-center rounded-card border-2 border-dashed border-accent bg-bg/90"
+          className="animate-scale-in pointer-events-none fixed inset-3 z-50 flex items-center justify-center rounded-card border-2 border-dashed border-accent bg-bg/90"
           aria-hidden="true"
         >
           <p className="text-lg font-semibold text-fg">Drop to analyze</p>

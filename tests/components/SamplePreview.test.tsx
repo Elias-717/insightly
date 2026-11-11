@@ -14,10 +14,10 @@ describe('SamplePreview (landing example report)', () => {
   it('pointing at a finding isolates the cells it is about', async () => {
     render(<SamplePreview onOpen={vi.fn()} />);
     const outlier = screen.getByText('999');
-    expect(outlier.className).toMatch(/bg-mark\/55/); // soft at rest
+    expect(outlier).toHaveAttribute('data-state', 'rest'); // soft at rest
     await userEvent.hover(screen.getByRole('button', { name: /'age' has 1 outlier/ }));
-    expect(outlier.className).toMatch(/bg-mark(?!\/)/); // fully lit
-    expect(screen.getByText('95000').className).toMatch(/bg-transparent/); // others fade
+    expect(outlier).toHaveAttribute('data-state', 'on'); // fully lit
+    expect(screen.getByText('95000')).toHaveAttribute('data-state', 'off'); // others fade
   });
 
   it('opens the full report from the button and from a finding', async () => {

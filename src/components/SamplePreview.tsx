@@ -6,6 +6,20 @@ import { cn } from '@/lib/utils';
 import { qualityVerdict } from '@/lib/overview/summary';
 import { PREVIEW, PREVIEW_COLUMNS, PREVIEW_FINDINGS, PREVIEW_ROWS } from '@/data/preview';
 
+/** Load timeline (ms). Structure first, then bars, then one finding at a time. */
+const T = {
+  header: 60,
+  figures: 140,
+  table: 220,
+  row: (i: number) => 300 + i * 45,
+  bars: 560,
+  finding: (i: number) => 950 + i * 280,
+};
+const FINDING_ORDER: Record<string, number> = Object.fromEntries(
+  PREVIEW_FINDINGS.map((f, i) => [f.id, i]),
+);
+const d = (ms: number) => ({ '--d': `${ms}ms` }) as React.CSSProperties;
+
 /**
  * Landing-page preview of the report for the messy sample. Findings and the
  * table are linked: pointing at a finding highlights exactly the cells it is
@@ -17,7 +31,10 @@ export function SamplePreview({ onOpen }: { onOpen: () => void }) {
 
   return (
     <section aria-labelledby="preview-heading" className="min-w-0">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+      <div
+        className="anim-rise flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2"
+        style={d(T.header)}
+      >
         <div className="min-w-0">
           <h2 id="preview-heading" className="text-[13px] text-muted">
             Example report
@@ -39,7 +56,7 @@ export function SamplePreview({ onOpen }: { onOpen: () => void }) {
       </div>
 
       {/* Headline figures: plain numbers on a shared baseline, no boxes. */}
-      <dl className="mt-6 flex flex-wrap items-end gap-x-10 gap-y-4">
+      <dl className="anim-rise mt-6 flex flex-wrap items-end gap-x-10 gap-y-4" style={d(T.figures)}>
         <div className="flex items-end gap-3">
           <dt className="sr-only">Quality score</dt>
           <dd className="stat-value text-[44px] font-semibold leading-none text-fg">
@@ -62,7 +79,8 @@ export function SamplePreview({ onOpen }: { onOpen: () => void }) {
         role="region"
         aria-label={`Sample rows from ${PREVIEW.fileName}`}
         tabIndex={0}
-        className="scroll-thin relative mt-6 overflow-x-auto rounded-card border border-border bg-surface"
+        className="anim-rise scroll-thin relative mt-6 overflow-x-auto rounded-card border border-border bg-surface"
+        style={d(T.table)}
       >
         <table className="w-full border-collapse text-[12.5px]">
           <thead>
@@ -91,7 +109,11 @@ export function SamplePreview({ onOpen }: { onOpen: () => void }) {
           </thead>
           <tbody className="font-mono">
             {PREVIEW_ROWS.map((row, r) => (
-              <tr key={row.id} className={cn(r % 2 === 1 && 'bg-surface-2/60')}>
+              <tr
+                key={row.id}
+                className={cn('anim-rise', r % 2 === 1 && 'bg-surface-2/60')}
+                style={d(T.row(r))}
+              >
                 <td className="px-3 py-1.5 text-right text-muted">{row.id}</td>
                 {row.cells.map((cell, c) => {
                   const markId = row.marks[c];
@@ -115,15 +137,19 @@ export function SamplePreview({ onOpen }: { onOpen: () => void }) {
       </div>
 
       <div className="mt-8">
-        <h3 className="flex items-baseline gap-2 text-[15px] font-semibold text-fg">
+        <h3
+          className="anim-rise flex items-baseline gap-2 text-[15px] font-semibold text-fg"
+          style={d(T.finding(0) - 120)}
+        >
           Top findings
           <span className="text-[13px] font-normal text-muted">
             {PREVIEW_FINDINGS.length} of {PREVIEW.findingCount}, ranked by importance
           </span>
         </h3>
         <ul className="mt-2 border-t border-border" onMouseLeave={() => setActive(null)}>
-          {PREVIEW_FINDINGS.map((f) => (
-            <li key={f.id} className="border-b border-border">
+          {PREVIEW_FINDINGS.map((f, i) => (
+            // Each finding arrives as the highlighter reaches its cells.
+            <li key={f.id} className="anim-rise border-b border-border" style={d(T.finding(i))}>
               <button
                 onClick={onOpen}
                 onMouseEnter={() => setActive(f.id)}
@@ -167,8 +193,8 @@ function MissingBar({ pct, alignRight }: { pct: number; alignRight: boolean }) {
     <span className={cn('mt-1.5 flex items-center gap-1.5', alignRight && 'justify-end')}>
       <span className="h-[3px] w-12 overflow-hidden rounded-full bg-surface-2">
         <span
-          className={cn('block h-full', high ? 'bg-warning' : 'bg-fg-secondary/60')}
-          style={{ width: `${pct}%` }}
+          className={cn('anim-grow block h-full', high ? 'bg-warning' : 'bg-fg-secondary/60')}
+          style={{ width: `${pct}%`, ...d(T.bars) }}
         />
       </span>
       <span className={cn('text-[11px] tabular', high ? 'text-warning-text' : 'text-muted')}>
@@ -202,16 +228,13 @@ function Cell({
   }
 
   // At rest every mark shows softly; pointing at a finding isolates its cells.
+  // Colors live in globals.css (.hl) so states cross-fade and the load sweep works.
   const state = active === null ? 'rest' : active === markId ? 'on' : 'off';
   return (
     <mark
-      className={cn(
-        'rounded-[2px] px-1 py-px transition-colors duration-150',
-        // Dark paper: a translucent mark goes muddy and fails contrast, so use the solid one.
-        state === 'rest' && 'bg-mark/55 text-mark-fg dark:bg-mark',
-        state === 'on' && 'bg-mark text-mark-fg',
-        state === 'off' && 'bg-transparent text-fg',
-      )}
+      data-state={state}
+      className="hl hl-sweep rounded-[2px] px-1 py-px"
+      style={d(T.finding(FINDING_ORDER[markId] ?? 0))}
     >
       {content}
     </mark>

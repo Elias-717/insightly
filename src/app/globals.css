@@ -98,6 +98,88 @@ table,
   white-space: nowrap;
 }
 
+/*
+ * Motion. One orchestrated load sequence, not scattered effects: content rises
+ * in, bars fill, then the highlighter sweeps over each problem cell. Every
+ * animation takes its delay from --d and only animates *from* a start state,
+ * so the reduced-motion rule below (zero duration and delay) lands everything
+ * on its final state instantly.
+ */
+@property --hl {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
+.anim-rise {
+  animation: rise 460ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.anim-grow {
+  transform-origin: left center;
+  animation: grow 700ms cubic-bezier(0.3, 0.7, 0.3, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Highlighter: painted as a gradient so it can sweep left to right on load,
+   and colored via --hl so hover states cross-fade (needs @property above). */
+.hl {
+  background-color: transparent;
+  background-image: linear-gradient(var(--hl), var(--hl));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 100% 100%;
+  transition:
+    --hl 160ms ease-out,
+    color 160ms ease-out;
+}
+.hl[data-state='rest'] {
+  --hl: rgb(var(--mark) / 0.55);
+  color: rgb(var(--mark-fg));
+}
+/* Dark paper: a translucent mark goes muddy and fails contrast. */
+.dark .hl[data-state='rest'],
+.hl[data-state='on'] {
+  --hl: rgb(var(--mark));
+  color: rgb(var(--mark-fg));
+}
+.hl[data-state='off'] {
+  --hl: transparent;
+  color: rgb(var(--fg));
+}
+.hl-sweep {
+  animation: sweep 420ms cubic-bezier(0.3, 0.7, 0.4, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes sweep {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+/* Quality ring draws from empty to its score. */
+.ring-draw {
+  animation: ring 900ms cubic-bezier(0.3, 0.7, 0.3, 1) both;
+  animation-delay: var(--d, 120ms);
+}
+@keyframes ring {
+  from {
+    stroke-dasharray: 0 999;
+  }
+}
+
 /* Visible focus ring using the accent color (WCAG keyboard nav). */
 :focus-visible {
   outline: 2px solid rgb(var(--accent));

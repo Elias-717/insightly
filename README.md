@@ -32,6 +32,7 @@ Insightly is a privacy-first, browser-only data profiling tool. Drop in a CSV an
 - **Data table** — search, sort, per-column filter, virtualized for 50,000+ rows, sticky header, column show/hide, with missing/outlier highlighting.
 - **Export** — PDF report, standalone HTML report, and insights as Markdown.
 - **UI/UX** — light/dark mode (remembered + system-aware), responsive to 360px, loading skeletons, toasts, tabs, and keyboard shortcuts (`/`, `d`, `?`).
+- **Motion** — a short load sequence on the landing page (rows rise in, missing-value bars fill, then a highlighter sweeps over each problem cell as its finding appears), a self-drawing quality ring, and fading tab switches. All of it is turned off under `prefers-reduced-motion`.
 - **Resilient** — friendly, specific error handling and a global error boundary.
 
 ## Tech stack
@@ -109,7 +110,10 @@ npm run test:e2e         # end-to-end + accessibility, desktop + mobile
 ```
 
 The suite has **198 unit + component tests** plus **12 Playwright E2E/accessibility
-tests** across desktop and a 375px mobile viewport. Coverage of the pure logic in
+tests** across desktop and a 375px mobile viewport. 10 of the 12 Playwright tests
+pass; the end-to-end flow test is blocked by a known type-detection bug (an
+all-unique integer column such as `score` is labelled an identifier), described in
+[`TEST_REPORT.md`](TEST_REPORT.md). Coverage of the pure logic in
 `src/lib` is **95.2% statements / 100% functions**, with enforced thresholds of 90%
 for `src/lib/analysis` and `src/lib/insights` and 70% overall.
 
@@ -159,18 +163,30 @@ These were decided during the build to keep everything local, fast, and portfoli
 - **Virtualized table over pagination.** @tanstack/react-virtual keeps scrolling smooth at 50k+ rows without the UX cost of paging.
 - **Recharts** for charts and a hand-rolled SVG for the correlation heatmap and box summaries, where a grid/box renders more cleanly and accessibly than a charting primitive.
 - **No `any`.** Strict TypeScript throughout, with shared domain types as the single source of truth.
-- **One calm accent, token-driven theming.** A single blue accent (`#2563EB` light, `#3B82F6` dark) is used only for primary actions, links, focus rings, and active tabs; semantic colors (green/amber/orange/red/blue) are reserved for meaning and always paired with a Lucide icon and a text label. All colors are CSS-variable design tokens (with darker `-text` variants where needed) checked for WCAG AA contrast in light and dark mode. The data quality ring is colored by grade, and overview cards shift to warning/error tones past 10%/25% thresholds.
-- **Monospace for data.** Column names and raw table/stat values use JetBrains Mono with `tabular-nums` so figures align; UI text uses Inter. Both are self-hosted via `next/font`.
-- **Flat surfaces, hairline borders.** 1px borders and a single card radius replace heavy shadows; a subtle shadow is used only on popovers and dialogs. Animations are kept under 200ms and disabled under `prefers-reduced-motion`.
+- **One calm accent, token-driven theming.** The palette borrows from green-bar printout paper: a cool paper background, a single ledger-green accent (`#0B6B4C` light, `#5CC494` dark) used only for primary actions, links, focus rings, and active tabs, and a highlighter yellow reserved for marking problem cells in data; semantic colors (green/amber/orange/red/blue) are reserved for meaning and always paired with a Lucide icon and a text label. All colors are CSS-variable design tokens (with darker `-text` variants where needed) checked for WCAG AA contrast in light and dark mode. The data quality ring is colored by grade, and overview cards shift to warning/error tones past 10%/25% thresholds.
+- **Monospace for data.** Column names and raw table/stat values use JetBrains Mono with `tabular-nums` so figures align; UI text uses Hanken Grotesk. Both are self-hosted via `next/font`.
+- **Flat surfaces, hairline borders.** 1px borders and a single card radius replace heavy shadows; a subtle shadow is used only on popovers and dialogs. Interface transitions stay under 200ms; the one longer moment is the landing page's load sequence (about two seconds). All motion is disabled under `prefers-reduced-motion`, and the accessibility scans run with reduced motion so they check the settled page.
 - **`metadataBase`** points at `https://tryinsightly.vercel.app` so Open Graph images resolve correctly.
 
 ## Screenshots
 
-A static preview of the results screen ships at [`public/preview.svg`](public/preview.svg) and is shown on the landing page. Drop real captures of the landing and results screens (light and dark) into `docs/screenshots/` when deploying.
+Captured from the current build at 1440 × 900 (in [`docs/screenshots/`](docs/screenshots/)).
 
-| Landing | Overview | Charts | Whispers |
-| --- | --- | --- | --- |
-| _hero + upload_ | _quality ring + cards_ | _histograms + heatmap_ | _ranked insights_ |
+**Landing page:** upload on the left, an example report for the messy sample on the right.
+
+![Landing page, light](docs/screenshots/landing.png)
+
+![Landing page, dark](docs/screenshots/landing-dark.png)
+
+**Overview:** quality score, headline, key figures, and the top findings.
+
+![Overview, light](docs/screenshots/overview.png)
+
+![Overview, dark](docs/screenshots/overview-dark.png)
+
+| Columns | Charts |
+| --- | --- |
+| ![Columns tab](docs/screenshots/columns.png) | ![Charts tab](docs/screenshots/charts.png) |
 
 ## Future improvements
 

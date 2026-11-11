@@ -82,9 +82,9 @@ export function QualityGauge({
             fill="none"
             strokeWidth="10"
             strokeLinecap="round"
-            strokeDasharray={`${dash} ${circumference}`}
+            style={{ strokeDasharray: `${dash} ${circumference}` }}
             transform="rotate(-90 66 66)"
-            className={`${ringColor} stroke-current motion-safe:transition-all motion-safe:duration-150`}
+            className={`${ringColor} ring-draw stroke-current motion-safe:transition-all motion-safe:duration-150`}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">

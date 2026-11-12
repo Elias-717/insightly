@@ -22,7 +22,7 @@
     "prepare": "husky || true"
   },
   "dependencies": {
-    "@tanstack/react-virtual": "^3.10.8",
+    "@tanstack/react-virtual": "^3.14.26",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.66.0",

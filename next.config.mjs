@@ -23,12 +23,35 @@ const csp = [
 // delivered via <meta> tags in the root layout. Hosts should ALSO set the full
 // header set below at the CDN/edge. This array is exported for that purpose and
 // documented in the README "Verify privacy" section.
+//
+// The header CSP keeps script-src 'unsafe-inline' because inline-script hashes
+// change every build. The exported HTML also carries a <meta> CSP with those
+// hashes instead (scripts/csp.mjs); browsers enforce both policies, so only the
+// hashed scripts can run. `tests/unit/security-headers.test.ts` keeps
+// vercel.json in sync with this object.
 export const SECURITY_HEADERS = {
   'Content-Security-Policy': csp,
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'no-referrer',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  'Permissions-Policy': [
+    'accelerometer=()',
+    'browsing-topics=()',
+    'camera=()',
+    'display-capture=()',
+    'geolocation=()',
+    'gyroscope=()',
+    'hid=()',
+    'magnetometer=()',
+    'microphone=()',
+    'midi=()',
+    'payment=()',
+    'serial=()',
+    'usb=()',
+  ].join(', '),
   'X-Frame-Options': 'DENY',
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains',
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Resource-Policy': 'same-origin',
 };
 
 /** @type {import('next').NextConfig} */

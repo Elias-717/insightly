@@ -187,3 +187,49 @@ reported as low contrast.
 
 The keyboard-shortcut test used to be flaky: it pressed `?` before hydration
 attached the listener. It now waits for the page to finish loading.
+
+### Offline support
+
+A build-generated service worker (`scripts/build-sw.mjs` + `scripts/sw-template.js`)
+makes the app work offline after the first visit. Tests added (suite now **212**
+Vitest + **14** Playwright, all passing):
+
+- `tests/unit/build-sw.test.ts` (+6): file listing, URL mapping (`index.html`
+  to `/`, skipped files), content-hash versioning, and template rendering. It
+  caught a real bug during development: the template's header comment named the
+  placeholders, and `String.replace` filled the comment instead of the code. The
+  generator now requires each placeholder exactly once.
+- `tests/components/ServiceWorkerRegistrar.test.tsx` (+3): registers in
+  production only, and is a no-op without service worker support.
+- `tests/e2e/offline.spec.ts` (+2, desktop + mobile): after the first visit,
+  goes offline, proves an uncached request fails, reloads, and parses a sample
+  (the worker chunk was never loaded online, so this checks the full precache).
+
+`tests/setup.ts` now stubs `Element.prototype.scrollIntoView` (missing in
+jsdom); the Dashboard test intermittently reported it as an unhandled error.
+
+### Security and privacy hardening
+
+Suite now **226** Vitest + **16** Playwright, all passing; `src/lib` coverage
+96.34% statements / 90.67% branches / 100% functions.
+
+- `tests/edge/prototype-keys.test.ts` (+4): **bug found and fixed.** A column
+  named `constructor`, `toString`, or `__proto__` got an `Object.prototype`
+  member as its type (`analyzeDataset` read `overrides[name]`), so those columns
+  were never profiled. Correlation lookups had the same flaw for a name pair
+  joining to `__proto__`. Now `Object.hasOwn` and a null-prototype lookup.
+- `tests/unit/csp.test.ts` (+6): inline-script hashing, policy rewrite,
+  idempotency, policy moved ahead of every script, build fails without a policy.
+- `tests/unit/security-headers.test.ts` (+3): `vercel.json` matches
+  `SECURITY_HEADERS`; HSTS, COOP and no-`unsafe-eval` stay in place; `/sw.js` is
+  `no-cache`.
+- `tests/unit/export-html.test.ts` (+1): exported reports carry
+  `default-src 'none'` and no scripts.
+- `tests/e2e/privacy.spec.ts` (+2, desktop + mobile): a file with a unique
+  marker, every tab, every export (HTML, Markdown, CSV, PDF), then "New file".
+  Fails on any cross-origin, non-GET, or marker-carrying request, any
+  non-static request after load, or any CSP violation.
+
+Both new safeguards were checked against deliberate failures (temporary specs,
+not committed): a `fetch` carrying the marker fails the privacy test, and an
+injected inline `<script>` is blocked with a `script-src` violation.

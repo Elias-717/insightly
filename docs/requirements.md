@@ -114,3 +114,7 @@ applicable, automated tests.
 | FR-10.5 | Keyboard shortcuts: `/` search, `d` dark mode, `?` shortcuts dialog. | Done |
 | FR-10.6 | Friendly, specific error messages for every failure mode. | Done |
 | FR-10.7 | Global error boundary with a friendly fallback. | Done |
+| FR-10.8 | Works offline after the first visit: a build-generated service worker precaches the app's static files (never user data). | Done |
+| FR-10.9 | "New file" closes the dataset, stops the parsing worker, and confirms the data was cleared. | Done |
+| FR-10.10 | Production CSP allows only hashed inline scripts; exported HTML reports carry a no-script, no-network policy. | Done |
+| FR-10.11 | An automated test proves a loaded file never leaves the origin (every tab and export). | Done |

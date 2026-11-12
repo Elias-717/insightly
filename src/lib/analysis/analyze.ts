@@ -42,7 +42,10 @@ export function analyzeDataset(
   const columns = raw.headers.map((name, index) => {
     const values = columnValues(raw, index);
     const detection = detectColumnType(values, name);
-    const type = overrides[name] ?? detection.type;
+    // Own-property check: column names come from the file, and a plain
+    // `overrides[name]` would return Object.prototype members for headers
+    // like `constructor` or `__proto__`.
+    const type = Object.hasOwn(overrides, name) ? overrides[name] : detection.type;
     return profileColumn(name, index, values, type, detection.type);
   });
 

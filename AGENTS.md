@@ -46,6 +46,10 @@ src/
 │                   # missing breakdown, quality reasons/verdict) — no analysis logic
 ├── types/index.ts  # shared domain types (single source of truth)
 └── workers/csv.worker.ts  # Papaparse parsing off the main thread
+scripts/
+├── csp.mjs         # postbuild: swaps script-src 'unsafe-inline' for inline-script hashes
+├── sw-template.js  # offline service worker (template)
+└── build-sw.mjs    # postbuild: writes out/sw.js with the precache list + version
 ```
 
 Security posture and the dependency rationale (why we stay on Next 14.2.x for a
@@ -77,11 +81,13 @@ analysis engine → insights → export/worker/data → UI components → dashbo
 
 ## Testing (current state)
 
-- **203** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
+- **226** Vitest tests: unit (`tests/unit`, plus top-level `tests/*.test.ts`),
   edge cases (`tests/edge`), property-based (`tests/property`, fast-check), and
   component (`tests/components`).
-- **12** Playwright tests (`tests/e2e`): an end-to-end flow and axe accessibility
-  scans, each on desktop and a 375px mobile viewport. All 12 pass.
+- **16** Playwright tests (`tests/e2e`): an end-to-end flow, axe accessibility
+  scans, an offline reload test, and a privacy test (no request leaves the
+  origin or carries file data; no CSP violations), each on desktop and a 375px
+  mobile viewport. All 16 pass.
 - **1** performance smoke test (`tests/performance`, run via `npm run test:perf`):
   generates a 50k × 30 dataset in memory and asserts analysis < 5s.
 - Coverage of `src/lib` is ~96.3% statements / 100% functions, with enforced
@@ -135,6 +141,21 @@ Two minimal production fixes, both revealed by tests and documented in
 - The Overview's quality verdict (`qualityVerdict`) takes the headline severity
   from `buildOverviewSummary` so the two can never contradict each other. Keep
   them wired together if you change either.
+- **Offline / service worker:** `npm run build` runs `postbuild`, which turns
+  `scripts/sw-template.js` into `out/sw.js` (every export file precached, cache
+  versioned by content hash). `ServiceWorkerRegistrar` registers it in production
+  only, so `npm run dev` never caches. The worker only caches the app's static
+  files; never route user data through it. Test offline with
+  `tests/e2e/offline.spec.ts` against a fresh build.
+- **CSP hashes:** `postbuild` runs `scripts/csp.mjs` before `build-sw.mjs`.
+  Never add inline `<script>` at runtime; only the inline scripts present at
+  build time are hashed and allowed.
+- **Security headers:** `SECURITY_HEADERS` in `next.config.mjs` and `vercel.json`
+  must match (`tests/unit/security-headers.test.ts`). Change both together.
+- **File contents are untrusted keys:** never index a plain object with a column
+  name or cell value (`constructor`, `__proto__` would hit `Object.prototype`).
+  Use `Map`, `Object.hasOwn`, or `Object.create(null)`.
+  `tests/edge/prototype-keys.test.ts` covers this.
 - Conventional-commit messages (`feat:`, `fix:`, `test:`, `docs:`, `chore:`).
 
 ## Definition of done for a change

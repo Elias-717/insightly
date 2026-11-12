@@ -33,6 +33,8 @@ export function buildHtmlReport(dataset: Dataset, insights: Insight[]): string {
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"/>
+<meta name="referrer" content="no-referrer"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Insightly report — ${escapeHtml(dataset.raw.fileName)}</title>
 <style>

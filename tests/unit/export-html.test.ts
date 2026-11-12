@@ -17,6 +17,14 @@ describe('HTML report export', () => {
     expect(html).toContain('</html>');
   });
 
+  it('locks the report down with its own policy: no scripts, no network', () => {
+    const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]*)"/)?.[1];
+    expect(csp).toContain("default-src 'none'");
+    expect(csp).not.toMatch(/script-src|connect-src/);
+    expect(html.indexOf('Content-Security-Policy')).toBeLessThan(html.indexOf('<title>'));
+    expect(html).not.toMatch(/<script/i);
+  });
+
   it('includes the file name in the title', () => {
     expect(html).toContain('report.csv');
   });

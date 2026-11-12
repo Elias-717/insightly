@@ -1,0 +1,24 @@
+# Weekly dependency updates. Next.js majors are ignored on purpose: the app is a
+# static export and stays on the latest 14.2.x patch (see SECURITY.md); a major
+# upgrade is planned and done by hand, not merged from a bot PR.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: next
+        update-types: [version-update:semver-major]
+      - dependency-name: eslint-config-next
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

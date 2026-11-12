@@ -61,7 +61,34 @@ You don't have to take our word for it:
 2. Load a CSV or click a sample dataset and use every tab.
 3. Watch the request list — no requests carrying your file or data are made. The app only loaded its own static assets (HTML, JS, CSS, fonts) up front.
 
-There are no analytics, trackers, or third-party scripts. Fonts are self-hosted via `next/font`. A Content-Security-Policy (`connect-src 'self'`, no third-party `script-src`) is applied via `<meta>` in the page and exported as `SECURITY_HEADERS` in `next.config.mjs` for hosts to set at the CDN/edge (CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-Frame-Options).
+This is also enforced automatically: `tests/e2e/privacy.spec.ts` loads a file with a
+unique marker, uses every tab and export, and fails if any request leaves the site,
+writes anything, or carries the data.
+
+The site's host still sees ordinary web traffic (IP address, which static files
+were requested), as with any website, but never your data. Self-host `out/` or run
+it locally to avoid even that. Closing a file ("New file") clears it from the tab.
+
+There are no analytics, trackers, or third-party scripts. Fonts are self-hosted via `next/font`. A Content-Security-Policy (`connect-src 'self'`; `script-src` limited to the hashes of the page's own inline scripts, added at build time by `scripts/csp.mjs`) is applied via `<meta>` in the page and exported as `SECURITY_HEADERS` in `next.config.mjs` for hosts to set at the CDN/edge (CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-Frame-Options).
+
+### Works offline
+
+After your first visit, Insightly works with no internet connection. A service
+worker caches the app's own files (HTML, JavaScript, CSS, fonts), never your data.
+It is generated at build time by `scripts/build-sw.mjs`, which lists every file in
+`out/` and versions the cache by their content hash, so each deploy replaces the
+old cache. Page loads try the network first (online users get new versions) and
+fall back to the cache when offline.
+
+To run it entirely on your own machine:
+
+```bash
+npm install && npm run build   # needs internet once
+npx serve out                  # then it works with Wi-Fi off
+```
+
+Opening `out/index.html` directly from disk (`file://`) is not supported; serve
+the folder with any static file server.
 
 ## How it works
 
@@ -102,14 +129,14 @@ npm run dev
 ## Testing
 
 ```bash
-npm test                 # 203 unit, edge, property, and component tests
+npm test                 # 226 unit, edge, property, and component tests
 npm run test:coverage    # coverage report (thresholds enforced)
 npm run test:perf        # 50k x 30 performance smoke test
 npm run test:e2e:install # one-time: download the Playwright browser
 npm run test:e2e         # end-to-end + accessibility, desktop + mobile
 ```
 
-The suite has **203 unit + component tests** plus **12 Playwright E2E/accessibility
+The suite has **226 unit + component tests** plus **16 Playwright E2E/accessibility/offline/privacy
 tests** across desktop and a 375px mobile viewport, all passing. Coverage of the pure logic in
 `src/lib` is **96.3% statements / 100% functions**, with enforced thresholds of 90%
 for `src/lib/analysis` and `src/lib/insights` and 70% overall.

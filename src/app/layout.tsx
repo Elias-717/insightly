@@ -3,6 +3,7 @@ import { Hanken_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { ToastProvider } from '@/components/providers/ToastProvider';
+import { ServiceWorkerRegistrar } from '@/components/ServiceWorkerRegistrar';
 
 // Self-hosted via next/font — no external font requests at runtime.
 // Text: Hanken Grotesk. Data (values, file and column names, tables): JetBrains Mono.
@@ -55,6 +56,9 @@ export const viewport: Viewport = {
  * - worker-src blob: for the CSV parsing Web Worker.
  * - connect-src 'self': no outbound network calls with user data.
  * - img-src allows data:/blob: for generated chart PNGs and downloads.
+ * After `next build`, scripts/csp.mjs replaces script-src 'unsafe-inline' in the
+ * exported HTML with SHA-256 hashes of the page's own inline scripts, and moves
+ * this tag to the top of <head>.
  * Delivered as a <meta> tag because static export cannot set HTTP headers; the
  * same policy plus extra headers is also configured in next.config for hosts
  * that serve it dynamically.
@@ -92,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <ToastProvider>{children}</ToastProvider>
         </ThemeProvider>
+        <ServiceWorkerRegistrar />
       </body>
     </html>
   );

@@ -55,7 +55,7 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Run Playwright tests (flow + accessibility, desktop + mobile)
+      - name: Run Playwright tests (flow, accessibility, offline, privacy; desktop + mobile)
         run: npm run test:e2e
 
       - name: Upload Playwright report

@@ -24,3 +24,9 @@ if (!globalThis.ResizeObserver) {
     disconnect() {}
   };
 }
+
+// jsdom lacks scrollIntoView, which the Dashboard calls (after a short delay)
+// when an insight jumps to a column.
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => {};
+}

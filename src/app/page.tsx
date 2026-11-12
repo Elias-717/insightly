@@ -8,14 +8,23 @@ import { ShortcutsDialog } from '@/components/ShortcutsDialog';
 import { DashboardSkeleton } from '@/components/ui/Skeleton';
 import { useCsvParser } from '@/hooks/useCsvParser';
 import { useTheme } from '@/components/providers/ThemeProvider';
+import { useToast } from '@/components/providers/ToastProvider';
 import { getSample } from '@/data/samples';
 import type { DataTableHandle } from '@/components/panels/DataTablePanel';
 
 export default function HomePage() {
   const { state, parse, parseText, cancel, reset } = useCsvParser();
   const { toggle } = useTheme();
+  const { toast } = useToast();
   const [showShortcuts, setShowShortcuts] = useState(false);
   const tableRef = useRef<DataTableHandle>(null);
+
+  // Dropping the dataset from state (and stopping the worker) releases the
+  // file's contents; nothing was ever persisted, so this is a full clear.
+  const closeFile = useCallback(() => {
+    reset();
+    toast('File closed. Its data was cleared from this tab.', 'success');
+  }, [reset, toast]);
 
   const onSample = useCallback(
     (id: 'grades' | 'sales' | 'messy') => {
@@ -54,7 +63,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <Header
-        onReset={reset}
+        onReset={closeFile}
         onShowShortcuts={() => setShowShortcuts(true)}
         showReset={Boolean(hasData)}
       />

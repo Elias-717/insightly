@@ -36,7 +36,9 @@ export function buildCorrelationMatrix(
 ): CorrelationMatrix {
   const names = columns.map((c) => c.name);
   const cells: CorrelationMatrix['cells'] = [];
-  const lookup: Record<string, number> = {};
+  // Null prototype: keys are built from column names in the file, so lookups
+  // must never hit inherited members such as `constructor`.
+  const lookup = Object.create(null) as Record<string, number>;
 
   for (let i = 0; i < columns.length; i += 1) {
     for (let j = 0; j < columns.length; j += 1) {

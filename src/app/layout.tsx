@@ -80,7 +80,7 @@ const csp = [
   "worker-src 'self' blob:",
   "connect-src 'self'",
   "object-src 'none'",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self' https://eliasalsumairi.dev https://www.eliasalsumairi.dev http://localhost:3000 http://localhost:3457",
   "form-action 'self'",
 ].join('; ');
 

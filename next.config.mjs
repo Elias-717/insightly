@@ -14,7 +14,7 @@ const csp = [
   "worker-src 'self' blob:",
   "connect-src 'self'",
   "object-src 'none'",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self' https://eliasalsumairi.dev https://www.eliasalsumairi.dev http://localhost:3000 http://localhost:3457",
   "form-action 'self'",
 ].join('; ');
 
@@ -48,7 +48,6 @@ export const SECURITY_HEADERS = {
     'serial=()',
     'usb=()',
   ].join(', '),
-  'X-Frame-Options': 'DENY',
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',

@@ -15,7 +15,7 @@ file-derived content, supply-chain) rather than server-side.
 - **Content-Security-Policy** delivered via `<meta>` (and exported as
   `SECURITY_HEADERS` in `next.config.mjs` for the CDN/edge): `default-src 'self'`,
   `connect-src 'self'` (no outbound data), `object-src 'none'`,
-  `frame-ancestors 'none'`. `'unsafe-eval'` is scoped to development only and is
+  `frame-ancestors` limited to the site itself and the owner's portfolio (`eliasalsumairi.dev`, plus localhost for local testing). `'unsafe-eval'` is scoped to development only and is
   dropped from the production policy.
 - **No inline scripts except Next.js's own.** After the build, `scripts/csp.mjs`
   replaces `script-src 'unsafe-inline'` in the exported HTML with SHA-256 hashes
@@ -26,7 +26,7 @@ file-derived content, supply-chain) rather than server-side.
 - **Additional headers** (`vercel.json`, kept identical to `SECURITY_HEADERS` by
   a unit test): `Strict-Transport-Security` (2 years), `Cross-Origin-Opener-Policy`
   and `Cross-Origin-Resource-Policy: same-origin`, `X-Content-Type-Options: nosniff`,
-  `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY`, and a `Permissions-Policy`
+  `Referrer-Policy: no-referrer`, and a `Permissions-Policy`
   that disables camera, mic, location, payment, USB, serial, HID, MIDI, sensors,
   screen capture, and Topics. `/sw.js` is served `Cache-Control: no-cache`. Note
   that `frame-ancestors` only works as a header (browsers ignore it in `<meta>`),

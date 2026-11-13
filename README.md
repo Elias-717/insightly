@@ -69,7 +69,7 @@ The site's host still sees ordinary web traffic (IP address, which static files
 were requested), as with any website, but never your data. Self-host `out/` or run
 it locally to avoid even that. Closing a file ("New file") clears it from the tab.
 
-There are no analytics, trackers, or third-party scripts. Fonts are self-hosted via `next/font`. A Content-Security-Policy (`connect-src 'self'`; `script-src` limited to the hashes of the page's own inline scripts, added at build time by `scripts/csp.mjs`) is applied via `<meta>` in the page and exported as `SECURITY_HEADERS` in `next.config.mjs` for hosts to set at the CDN/edge (CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-Frame-Options).
+There are no analytics, trackers, or third-party scripts. Fonts are self-hosted via `next/font`. A Content-Security-Policy (`connect-src 'self'`; `script-src` limited to the hashes of the page's own inline scripts, added at build time by `scripts/csp.mjs`) is applied via `<meta>` in the page and exported as `SECURITY_HEADERS` in `next.config.mjs` for hosts to set at the CDN/edge (CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy).
 
 ### Works offline
 

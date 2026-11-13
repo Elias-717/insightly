@@ -21,7 +21,9 @@ describe('security headers', () => {
   it('keeps the essentials in place', () => {
     const csp = SECURITY_HEADERS['Content-Security-Policy'];
     expect(csp).toContain("connect-src 'self'");
-    expect(csp).toContain("frame-ancestors 'none'");
+    // Only the site itself and the owner's portfolio may embed it.
+    expect(csp).toContain("frame-ancestors 'self' https://eliasalsumairi.dev https://www.eliasalsumairi.dev http://localhost:3000 http://localhost:3457");
+    expect(SECURITY_HEADERS).not.toHaveProperty('X-Frame-Options');
     expect(csp).not.toContain('unsafe-eval');
     expect(SECURITY_HEADERS['Strict-Transport-Security']).toMatch(/max-age=\d{8,}/);
     expect(SECURITY_HEADERS['Cross-Origin-Opener-Policy']).toBe('same-origin');
